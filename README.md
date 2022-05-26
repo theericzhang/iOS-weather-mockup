@@ -1,4 +1,42 @@
-# Getting Started with Create React App
+# iOS Weather Clone with React.js
+
+After carefully scrutinizing iOS's default weather app, I wanted to take a closer look at how some components were styled and created. 
+
+One of the elements that I carefully analyzed was the temperature gauge. Upon examination, I came to a few conclusions that helped me create a clone of the forecasted weather module in the weather app. 
+
+## Real weather app
+
+<img src="./readme%20images/iphone%20real.png" alt="drawing" width="400"/>
+
+## Clone
+<img src="./readme%20images/2.png" alt="drawing" width="400"/><br /><br /><br /><br />
+
+
+# iOS uses an Absolute Temperature Delta to determine the width of the temperature bar
+iOS uses normalizes the entire bar width off of the daily maximum temperature change (absolute high temp - absolute low temp) throughout the next 10 days.
+
+After normalizing, render the filled gradient bar using min/max temperatures from each day as a ratio percentage for margins. <br />
+
+<img src="./readme%20images/3.png" alt="drawing" width="800"/> <br />
+
+# Rendering all available content is as simple as Mapping out an array
+Rendering each weather row (weatherDay) 7 times with data fetched from an API, we can get a very similar render to that of iOS’s weather app. 
+
+It needs a few small tweaks, but thankfully most of the heavy lifting was figuring out data manipulation for a second time, since the API I was using in the middle of my project suddenly went down - and is still down ☹️ <br />
+
+## Thankfully, I switched over to a highly available API with a wide variety of data - [Open-Meteo](https://open-meteo.com/en)
+
+<img src="./readme%20images/4.png" alt="drawing" width="800"/> <br />
+
+# Here it is in-situ!
+Looking forward to write out the hourly forecast preview as a next module 🎉 <br />
+
+<img src="./readme%20images/5.png" alt="drawing" width="800"/> <br /> <br /> <br />
+
+
+
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -39,32 +77,3 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
