@@ -2,7 +2,6 @@ import React from "react";
 
 export default function Hourly ({ currentComment }) {
     return (
-        // use future-wrapper styles 
         <section className="hourly-wrapper">
             <h4 className="current-hour-comment">{currentComment}</h4>
             <hr className='forecast-divider'/>

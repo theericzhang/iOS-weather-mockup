@@ -87,14 +87,15 @@ function App() {
                     todayTempMin={weatherData?.daily?.temperature_2m_min[0]}
                     todayTempMax={weatherData?.daily?.temperature_2m_max[0]}
                 />
-                {weatherData !== undefined && 
-                <div className="weather-modules">
+                {weatherData !== undefined && wmoCodes[weatherData?.hourly?.weathercode[1]] !== undefined
+                ? <div className="weather-modules">
                     <Hourly currentComment={currentComment}/>
                     <Future nextDays={weatherData?.daily} 
                             dayNameArray={upcomingWeek}
                             stringComment={wmoCodes[weatherData?.current_weather?.weathercode]}
                     />
-                </div>}
+                </div>
+                : null}
             </div>
         </div>
     )
