@@ -2,6 +2,7 @@ import { useEffect, useState, React } from 'react';
 import './App.css';
 import Hero from './components/Hero'
 import Future from './components/Future'
+import Hourly from './components/Hourly'
 import WeatherData from './WeatherData'
 
 function App() {
@@ -24,13 +25,41 @@ function App() {
         }
         getWeatherData()
     }, [])
+
+    const wmoCodes = {
+        "0": "Clear",
+        "1": "Mostly Clear",
+        "2": "Partly Cloudy",
+        "3": "Mostly Cloudy",
+        "45": "Fog",
+        "48": "Rime Fog",
+        "51": "Light Drizzle",
+        "53": "Moderate Drizzle",
+        "55": "Dense Drizzle",
+        "56": "Light Freezing Drizzle",
+        "57": "Dense Freezing Drizzle",
+        "61": "Slight Rain",
+        "63": "Moderate Rain",
+        "65": "Heavy Rain",
+        "71": "Light Snow",
+        "73": "Moderate Snow",
+        "75": "Heavy Snow",
+        "77": "Snow Grains",
+        "80": "Light Rain Showers",
+        "81": "Moderate Rain Showers",
+        "82": "Heavy Rain Showers",
+        "85": "Light Snow Showers",
+        "87": "Heavy Snow Showers"                   
+   }
     
     const daysOfWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
     const d = new Date();
     let hours = d.getHours();
+    let nextHour = d.getHours(d.setHours(hours + 1));
     let dayName = daysOfWeek[d.getDay()]
 
     let upcomingWeek = [daysOfWeek[(d.getDay()) % 7], daysOfWeek[(d.getDay() + 1) % 7 ], daysOfWeek[(d.getDay()+ 2) % 7 ], daysOfWeek[(d.getDay() + 3) % 7 ], daysOfWeek[(d.getDay() + 4) % 7 ], daysOfWeek[(d.getDay()+ 5)  % 7], daysOfWeek[(d.getDay()+ 6) % 7]]
+    let currentComment = wmoCodes[weatherData?.hourly?.weathercode[1]] + " conditions expected around " + `${nextHour}:00.`
 
     // let upcomingWeek = [daysOfWeek[]]
     // console.log(upcomingWeek)
@@ -47,31 +76,7 @@ function App() {
         )
     }
 
-    const wmoCodes = {
-                          "0": "Clear",
-                          "1": "Mostly Clear",
-                          "2": "Partly Cloudy",
-                          "3": "Mostly Cloudy",
-                          "45": "Fog",
-                          "48": "Rime Fog",
-                          "51": "Light Drizzle",
-                          "53": "Moderate Drizzle",
-                          "55": "Dense Drizzle",
-                          "56": "Light Freezing Drizzle",
-                          "57": "Dense Freezing Drizzle",
-                          "61": "Slight Rain",
-                          "63": "Moderate Rain",
-                          "65": "Heavy Rain",
-                          "71": "Light Snow",
-                          "73": "Moderate Snow",
-                          "75": "Heavy Snow",
-                          "77": "Snow Grains",
-                          "80": "Light Rain Showers",
-                          "81": "Moderate Rain Showers",
-                          "82": "Heavy Rain Showers",
-                          "85": "Light Snow Showers",
-                          "87": "Heavy Snow Showers"                   
-                     }
+    
 
     return (
         <div className="App">
@@ -79,11 +84,17 @@ function App() {
                 <Hero region={weatherData? "San Francisco" : null}
                     currenttemp={weatherData?.current_weather?.temperature}
                     comment={wmoCodes[weatherData?.current_weather?.weathercode]}  
+                    todayTempMin={weatherData?.daily?.temperature_2m_min[0]}
+                    todayTempMax={weatherData?.daily?.temperature_2m_max[0]}
                 />
-                <Future nextDays={weatherData?.daily} 
-                        dayNameArray={upcomingWeek}
-                        stringComment={wmoCodes[weatherData?.current_weather?.weathercode]}
-                />
+                {weatherData !== undefined && 
+                <div className="weather-modules">
+                    <Hourly currentComment={currentComment}/>
+                    <Future nextDays={weatherData?.daily} 
+                            dayNameArray={upcomingWeek}
+                            stringComment={wmoCodes[weatherData?.current_weather?.weathercode]}
+                    />
+                </div>}
             </div>
         </div>
     )

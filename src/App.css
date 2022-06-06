@@ -88,6 +88,12 @@
     background: url(./images/Sunny-Background.jpeg) no-repeat;
 }
 
+.weather-modules {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(2 * 15px);
+}
+
 .header-wrapper {
     display: flex;
     flex-direction: column;
@@ -138,6 +144,23 @@
     letter-spacing: -0.5px;
     filter: drop-shadow(0 0 0.75rem rgb(82, 82, 82));
 }
+
+.today-temps-min-max {
+    margin-top: calc(2 * 4px);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: calc(2 * 7px);
+}
+
+.temp-min-max {
+    margin: 0;
+    font-weight: 500;
+    font-size: calc(2 * 13.25px);
+    letter-spacing: -0.5px;
+    filter: drop-shadow(0 0 0.75rem rgb(82, 82, 82));
+}
+
 
 /* Frosted glass effect*/
 
@@ -290,4 +313,27 @@
     font-weight: 500;
     color:rgb(255 255 255 / 100%);
     letter-spacing: -0.7px;
+}
+
+.hourly-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: calc(2 * 262.5px);
+    background-color: rgb(42 118 239 / 10%);
+    backdrop-filter: blur(14px);
+    border-radius: calc(2 * 12.5px);
+}
+
+.current-hour-comment {
+    font-size: calc(2 * 8px);
+    letter-spacing: calc(2 * 0.0125em);
+    font-weight: 400;
+    padding: 0 20px;
+}
+
+.hourly-forecast-wrapper {
+    display: flex;
+    flex-direction: row;
 }
