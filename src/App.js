@@ -147,7 +147,7 @@ function App() {
             <div className="phone-wrapper">
                 
                 <img src={require('./images/Sunny-Background.jpeg')} alt="" className="weather-background" />
-                <div className="scrollable-region"></div>
+                {/* <div className="scrollable-region"></div> */}
                 <Hero region={weatherData? "San Francisco" : null}
                     currenttemp={weatherData?.current_weather?.temperature}
                     comment={wmoCodes[weatherData?.current_weather?.weathercode]}  
