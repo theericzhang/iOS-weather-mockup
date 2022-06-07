@@ -67,6 +67,7 @@
   color: white;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   font-family: SFpro;
   position: relative;
@@ -87,8 +88,9 @@
     height: calc(2 * 633px);
     /* background-position: 50% 100%; */
     /* position: absolute; */
-    top: 25px;
+    /* top: 25px; */
     border-radius: 15px;
+    z-index: -1;
 }
 
 .phone-wrapper {
@@ -97,15 +99,13 @@
     align-items: center;
     width: calc(2 * 292.5px);
     height: calc(2 * 633px);
-    top: 25px;
-    position: absolute;
     overflow: auto;
+    position: relative;
     /* background-image: url('./images/iPhoneFrame.svg'); */
     /* overflow-y: scroll; */
 }
 
 .scrollable-region {
-    height: 170%;
     width: 100%;
     position: absolute;
     top: 0;
