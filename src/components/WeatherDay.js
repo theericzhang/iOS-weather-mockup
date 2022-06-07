@@ -63,7 +63,7 @@ export default function WeatherDay ({index, day, comment, maxF, minF, maxRange, 
                 <span className="weather-day-data-low">{minF}°</span>
                 <div className="wrapper-bar">
                     <div className="weather-range-bar">
-                        {index == 0 && <div className="currentTempDot" style={currentTempDot}></div>}
+                        {index === 0 && <div className="currentTempDot" style={currentTempDot}></div>}
                         <div className="weather-range-bar-gradient" style={gradientbarfilled}></div>
                     </div>
                 </div>
