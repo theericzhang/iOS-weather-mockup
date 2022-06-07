@@ -63,21 +63,19 @@
 }
 
 .App {
-  text-align: center;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: SFpro;
-  position: relative;
-  height: 100vh;
+    text-align: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: SFpro;
+    position: relative;
+    height: 100vh;
 }
 
 .phone-frame {
-    /* background: url("./images/iPhoneFrame.svg"); */
     width: calc(2 * 326px);
-    /* height: 100%; */
     justify-self: center;
     position: fixed;
 }
@@ -86,9 +84,6 @@
     position: fixed;
     width: calc(2 * 292.5px);
     height: calc(2 * 633px);
-    /* background-position: 50% 100%; */
-    /* position: absolute; */
-    /* top: 25px; */
     border-radius: 15px;
     z-index: -1;
 }
@@ -101,17 +96,12 @@
     height: calc(2 * 633px);
     overflow: auto;
     position: relative;
-    /* background-image: url('./images/iPhoneFrame.svg'); */
-    /* overflow-y: scroll; */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
-.scrollable-region {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+.phone-wrapper::-webkit-scrollbar {
+    display: none;
 }
 
 #night {
@@ -336,7 +326,6 @@
 }
 
 .weather-range-bar-mask {
-    /* width: 20%; */
     height: 100%;
     border-radius: calc(2 * 4px);
     position: inherit;
@@ -368,7 +357,6 @@
     backdrop-filter: blur(14px);
     border-radius: calc(2 * 12.5px);
     z-index: 2;
-    /* overflow: scroll; */
 }
 
 .current-hour-comment {
@@ -390,6 +378,11 @@
 .hour {
     font-size: calc(2 * 9px);
     margin-bottom: calc(2 * 9px);
+}
+
+.tileForecastLogo-container {
+    height: calc(2 * 18px);
+    width: calc(2 * 17.5px);
 }
 
 .tileForecastLogo {
