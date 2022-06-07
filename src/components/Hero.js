@@ -1,6 +1,6 @@
 import { React } from 'react'
 
-export default function Hero ({region, currenttemp, comment}) {
+export default function Hero ({region, currenttemp, comment, todayTempMin, todayTempMax}) {
 
     return (
         <div className="header-wrapper">
@@ -10,6 +10,11 @@ export default function Hero ({region, currenttemp, comment}) {
                 <h1 className="temperature-deg-char">{currenttemp === undefined? null : "°"}</h1>
             </div>
             <h4 className="comment">{comment}</h4>
+            {todayTempMin !== undefined && 
+            <div className="today-temps-min-max">
+                <h4 className="temp-min-max">H:{Math.round(todayTempMax)}°</h4>
+                <h4 className="temp-min-max">L:{Math.round(todayTempMin)}°</h4>
+            </div>}
         </div>
     )
 }
