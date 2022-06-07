@@ -69,13 +69,26 @@
   flex-direction: column;
   align-items: center;
   font-family: SFpro;
+  position: relative;
+  height: 100vh;
+}
+
+.phone-frame {
+    /* background: url("./images/iPhoneFrame.svg"); */
+    width: calc(2 * 326px);
+    /* height: 100%; */
+    justify-self: center;
+    position: fixed;
 }
 
 .weather-background {
     position: fixed;
     width: calc(2 * 292.5px);
     height: calc(2 * 633px);
-    background-position: 50% 100%;
+    /* background-position: 50% 100%; */
+    /* position: absolute; */
+    top: 25px;
+    border-radius: 15px;
 }
 
 .phone-wrapper {
@@ -84,6 +97,21 @@
     align-items: center;
     width: calc(2 * 292.5px);
     height: calc(2 * 633px);
+    top: 25px;
+    position: absolute;
+    overflow: auto;
+    /* background-image: url('./images/iPhoneFrame.svg'); */
+    /* overflow-y: scroll; */
+}
+
+.scrollable-region {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 #night {
@@ -339,6 +367,7 @@
     background-color: rgb(32 87 176 / 25%);
     backdrop-filter: blur(14px);
     border-radius: calc(2 * 12.5px);
+    z-index: 2;
     /* overflow: scroll; */
 }
 

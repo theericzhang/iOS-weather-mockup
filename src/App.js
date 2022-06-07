@@ -3,6 +3,7 @@ import './App.css';
 import Hero from './components/Hero'
 import Future from './components/Future'
 import Hourly from './components/Hourly'
+import PhoneFrame from './images/iPhoneFrame.svg'
 
 function App() {
 
@@ -140,9 +141,13 @@ function App() {
 
     return (
         <div className="App">
-            <img src={require('./images/Sunny-Background.jpeg')} alt="" className="weather-background" />
+            
             {/* id={hours >= 6 && hours <= 20 ? 'sunny' : 'night'} */}
+            {/* <img src={PhoneFrame} alt="" className="phone-frame" /> */}
             <div className="phone-wrapper">
+                
+                <img src={require('./images/Sunny-Background.jpeg')} alt="" className="weather-background" />
+                <div className="scrollable-region"></div>
                 <Hero region={weatherData? "San Francisco" : null}
                     currenttemp={weatherData?.current_weather?.temperature}
                     comment={wmoCodes[weatherData?.current_weather?.weathercode]}  
@@ -161,6 +166,27 @@ function App() {
                     />
                 </div>
                 : null}
+
+                {/*DUPLICAATION*/}
+                <Hero region={weatherData? "San Francisco" : null}
+                    currenttemp={weatherData?.current_weather?.temperature}
+                    comment={wmoCodes[weatherData?.current_weather?.weathercode]}  
+                    todayTempMin={weatherData?.daily?.temperature_2m_min[0]}
+                    todayTempMax={weatherData?.daily?.temperature_2m_max[0]}
+                />
+                {weatherData !== undefined && wmoCodes[weatherData?.hourly?.weathercode[1]] !== undefined
+                ? <div className="weather-modules">
+                    <Hourly currentComment={currentComment}
+                            hourlyForecastArray={hourlyForecastArray}
+                            wmoCodesUrl={wmoCodesUrl}
+                    />
+                    <Future nextDays={weatherData?.daily} 
+                            dayNameArray={upcomingWeek}
+                            stringComment={wmoCodes[weatherData?.current_weather?.weathercode]}
+                    />
+                </div>
+                : null}
+                {/*DUPLICAATION*/}
             </div>
         </div>
     )
