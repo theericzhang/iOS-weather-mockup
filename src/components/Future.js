@@ -2,7 +2,7 @@ import { React } from 'react'
 import WeatherDay from './WeatherDay'
 import CalendarSvg from '../images/calendar.svg'
 
-export default function Future ({ nextDays, dayNameArray, stringComment }) {
+export default function Future ({ nextDays, dayNameArray, stringComment, currenttemp }) {
     let day0 = {}
     let day1 = {}
     let day2 = {}
@@ -122,6 +122,7 @@ export default function Future ({ nextDays, dayNameArray, stringComment }) {
                                     maxRange={tempRange}
                                     absMin={minF}
                                     absMax={maxF}
+                                    currenttemp={currenttemp}
                         />
     )
 

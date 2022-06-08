@@ -3,7 +3,7 @@ import PartlyCloudy from '../images/Partly cloudy.png'
 import Clear from '../images/Clear.png'
 import Cloudy from '../images/Cloudy.png'
 
-export default function WeatherDay ({index, day, comment, maxF, minF, maxRange, absMin, absMax}) {
+export default function WeatherDay ({index, day, comment, maxF, minF, maxRange, absMin, absMax, currenttemp}) {
     let imgUrl = ""
     
     switch (comment.toLowerCase()) {
@@ -44,7 +44,8 @@ export default function WeatherDay ({index, day, comment, maxF, minF, maxRange, 
     }
 
     const currentTempDot = {
-
+        marginLeft: 100*((currenttemp - minF)/maxRange) + "%"
+        // marginLeft: 10+ "px"
     }
 
     return (

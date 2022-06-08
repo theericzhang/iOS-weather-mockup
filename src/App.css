@@ -293,9 +293,8 @@
     width: calc(2 * 3px);
     height: calc(2 * 3px);
     border-radius: 50%;
-    border: 4px solid rgb(113 113 113);
+    border: 4px solid rgb(62 113 169);
     background-color: white;
-    margin-left: 50%;
     position: absolute;
     align-self: center;
 }
@@ -364,6 +363,8 @@
     letter-spacing: calc(2 * 0.0125em);
     font-weight: 400;
     padding: 0 23px;
+    /* position: sticky; */
+    top: 25px;
 }
 
 .hourly-forecast-wrapper {

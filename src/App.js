@@ -162,6 +162,7 @@ function App() {
                     <Future nextDays={weatherData?.daily} 
                             dayNameArray={upcomingWeek}
                             stringComment={wmoCodes[weatherData?.current_weather?.weathercode]}
+                            currenttemp={weatherData?.current_weather?.temperature}
                     />
                 </div>
                 : null}
@@ -182,6 +183,7 @@ function App() {
                     <Future nextDays={weatherData?.daily} 
                             dayNameArray={upcomingWeek}
                             stringComment={wmoCodes[weatherData?.current_weather?.weathercode]}
+                            currenttemp={weatherData?.current_weather?.temperature}
                     />
                 </div>
                 : null}
