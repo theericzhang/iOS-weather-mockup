@@ -67,6 +67,9 @@ function App() {
         theNext24Hours.push(d.getHours(d.setHours(hours + i)))
     }
 
+    // console.log(hours + ":" + d.getMinutes())
+    console.log(String(hours).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0'))
+    let isDay = hours >= 6 && hours <= 20
     // console.log(theNext24Hours)
 
     // let upcomingWeek = [daysOfWeek[]]
@@ -75,7 +78,7 @@ function App() {
         //loading placeholder
         return (
             <div className="App">
-                <div className="phone-wrapper" id={hours >= 6 && hours <= 20 ? 'sunny' : 'night'}>
+                <div className="phone-wrapper" id={isDay ? 'sunny' : 'night'}>
                     <Hero region={"San Francisco"}
                         currenttemp={"--"} 
                     />
