@@ -32,7 +32,16 @@ export default function Hourly ({ currentComment,
                     temperature={hour.temperature}
                     wmocode={hour.weathercode}
                     key={nanoid()}
-                    wmoCodeImageLink={wmoCodesUrl[hourlyForecastArray[index]?.weathercode]}
+                    // we want to appropriately display the weather logo depending if that hour 
+                    // falls between nighttime and daytime. nighttime logos have a moon, daytime
+                    // logos have a sun. Not all logos have a moon or sun indication, so we need
+                    // to create duplicate images with " night" prefix to prevent unfound module errors
+                    // from being thrown
+                    wmoCodeImageLink={(hour.timeISO8601 > todaysSunrise && hour.timeISO8601 < todaysSunset) 
+                                   || (hour.timeISO8601 > tmrwsSunrise && hour.timeISO8601 < tmrwsSunset) 
+                                   ? 
+                                     wmoCodesUrl[hourlyForecastArray[index]?.weathercode]
+                                   : wmoCodesUrl[hourlyForecastArray[index]?.weathercode] + " night"}
                     timeISO8601={hour.timeISO8601}
                     />
         } else {
@@ -40,7 +49,16 @@ export default function Hourly ({ currentComment,
                     temperature={hour.temperature}
                     wmocode={hour.weathercode} 
                     key={nanoid()}
-                    wmoCodeImageLink={wmoCodesUrl[hourlyForecastArray[index]?.weathercode]}
+                    // we want to appropriately display the weather logo depending if that hour 
+                    // falls between nighttime and daytime. nighttime logos have a moon, daytime
+                    // logos have a sun. Not all logos have a moon or sun indication, so we need
+                    // to create duplicate images with " night" prefix to prevent unfound module errors
+                    // from being thrown
+                    wmoCodeImageLink={(hour.timeISO8601 > todaysSunrise && hour.timeISO8601 < todaysSunset) 
+                                   || (hour.timeISO8601 > tmrwsSunrise && hour.timeISO8601 < tmrwsSunset) 
+                                   ? 
+                                     wmoCodesUrl[hourlyForecastArray[index]?.weathercode]
+                                   : wmoCodesUrl[hourlyForecastArray[index]?.weathercode] + " night"}
                     timeISO8601={hour.timeISO8601}
             />
         }      
@@ -128,6 +146,12 @@ export default function Hourly ({ currentComment,
     // shallow copy of the array before we act on it using the .filter() function.)
 
     const tilesComplete = tilesSorted.slice().filter(tile => tile.props.timeISO8601 >= hourlyForecastArray[0].timeISO8601 && tile.props.timeISO8601 <= hourlyForecastArray[23].timeISO8601)
+
+    // let isThisHourDay = false;
+    // const tilesRealComplete = []
+    // for (let i = 0; i< tilesComplete.length; i++) {
+    //     if (tilesComplete[i].temperature === "sunrise")
+    // }
     
     return (
         <section className="hourly-wrapper">

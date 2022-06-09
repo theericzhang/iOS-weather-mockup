@@ -10,6 +10,7 @@ export const IsDayContext = createContext()
 function App() {
 
     const [weatherData, setWeatherData] = useState({})
+    const [isDay, setIsDay] = useState(true)
 
     useEffect(() => {
         async function getWeatherData() {
@@ -26,6 +27,7 @@ function App() {
             // setWeatherData(WeatherData.data)
         }
         getWeatherData()
+        // console.log((timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes)))
     }, [])
 
     const wmoCodes = {
@@ -98,7 +100,11 @@ function App() {
     // Since we casted Sunset/Sunrise Hour/Minutes to a string, we need to cast it to a number
     // if we want to compare the total minutes elapsed. Otherwise, a comparison between
     // number and NaN will return false
-    let isDay = (timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes))
+
+    useEffect(() => {
+        setIsDay((timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes)))
+    },[todaysSunriseHour])
+    // let isDay = (timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes))
 
     while (weatherData === undefined) {
         //loading placeholder
@@ -131,9 +137,12 @@ function App() {
     // console.log(hourlyWeatherCodes)
 
     const wmoCodesUrl = {
-        "0": isDay ? "Clear" : "Clear night",
-        "1": isDay ? "Clear" : "Clear night",
-        "2": isDay ? "Partly cloudy" : "Cloudy night",
+        "0": "Clear",
+        "1": "Clear",
+        "2": "Partly cloudy",
+        // "0": isDay ? "Clear" : "Clear night",
+        // "1": isDay ? "Clear" : "Clear night",
+        // "2": isDay ? "Partly cloudy" : "Cloudy night",
         "3": "Cloudy",
         "45": "Fog",
         "48": "Fog",
