@@ -95,10 +95,11 @@ function App() {
     // multiply hour amount by 60 to get minutes passed
     // add minutes amount to get minute granularity
     // compare timeNowInMinutes with sunrise/sunset in minutes to determine day/night
-    let isDay = todaysSunset !== undefined && (timeNowInMinutes >= todaysSunriseHour * 60 + todaysSunriseMinutes) && (timeNowInMinutes <= todaysSunsetHour * 60 + todaysSunsetMinutes)
+    // Since we casted Sunset/Sunrise Hour/Minutes to a string, we need to cast it to a number
+    // if we want to compare the total minutes elapsed. Otherwise, a comparison between
+    // number and NaN will return false
+    let isDay = (timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes))
 
-    // let upcomingWeek = [daysOfWeek[]]
-    // console.log(upcomingWeek)
     while (weatherData === undefined) {
         //loading placeholder
         return (
