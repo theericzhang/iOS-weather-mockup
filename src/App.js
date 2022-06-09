@@ -72,12 +72,20 @@ function App() {
     // console.log(hours + ":" + d.getMinutes())
     // console.log(String(hours).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0'))
     const todaysSunrise = (new Date(weatherData?.daily?.sunrise[0]))
-    const todaysSunriseHour = todaysSunrise.getHours()
-    const todaysSunriseMinutes = todaysSunrise.getMinutes()
+    const todaysSunriseHour = String(todaysSunrise?.getHours()).padStart(2, '0')
+    const todaysSunriseMinutes = String(todaysSunrise?.getMinutes()).padStart(2, '0')
     
     const todaysSunset = (new Date(weatherData?.daily?.sunset[0]))
-    const todaysSunsetHour = todaysSunset.getHours()
-    const todaysSunsetMinutes = todaysSunset.getMinutes()
+    const todaysSunsetHour = String(todaysSunset?.getHours()).padStart(2, '0')
+    const todaysSunsetMinutes = String(todaysSunset?.getMinutes()).padStart(2, '0')
+    
+    const tmrwsSunrise = (new Date(weatherData?.daily?.sunrise[1]))
+    const tmrwsSunriseHour = String(tmrwsSunrise?.getHours()).padStart(2, '0')
+    const tmrwsSunriseMinutes = String(tmrwsSunrise?.getMinutes()).padStart(2, '0')
+    
+    const tmrwsSunset = (new Date(weatherData?.daily?.sunset[1]))
+    const tmrwsSunsetHour = String(tmrwsSunset?.getHours()).padStart(2, '0')
+    const tmrwsSunsetMinutes = String(tmrwsSunset?.getMinutes()).padStart(2, '0')
 
     const timeNowInMinutes = hours * 60 + minutes
 
@@ -86,7 +94,7 @@ function App() {
     // multiply hour amount by 60 to get minutes passed
     // add minutes amount to get minute granularity
     // compare timeNowInMinutes with sunrise/sunset in minutes to determine day/night
-    let isDay = (timeNowInMinutes >= todaysSunriseHour * 60 + todaysSunriseMinutes) && (timeNowInMinutes <= todaysSunsetHour * 60 + todaysSunsetMinutes)
+    let isDay = todaysSunset !== undefined && (timeNowInMinutes >= todaysSunriseHour * 60 + todaysSunriseMinutes) && (timeNowInMinutes <= todaysSunsetHour * 60 + todaysSunsetMinutes)
 
     // let upcomingWeek = [daysOfWeek[]]
     // console.log(upcomingWeek)
@@ -94,7 +102,8 @@ function App() {
         //loading placeholder
         return (
             <div className="App">
-                <div className="phone-wrapper" id={isDay ? 'sunny' : 'night'}>
+                <div className="phone-wrapper">
+                    <img src={require('./images/Sunny-Background.jpeg')} alt="" className="weather-background" />
                     <Hero region={"San Francisco"}
                         currenttemp={"--"} 
                     />
@@ -114,6 +123,7 @@ function App() {
     // const currentIndexTime = weatherData?.hourly?.time.indexOf(currentDateTimeISO)
     const hourlyTemperatures = weatherData?.hourly?.temperature_2m.slice(hours, hours+24)
     const hourlyWeatherCodes = weatherData?.hourly?.weathercode.slice(hours, hours+24)
+    const hoursStandardized = weatherData?.hourly?.time.slice(hours, hours+24)
 
     // console.log(hourlyTemperatures)
     // console.log(hourlyWeatherCodes)
@@ -149,9 +159,10 @@ function App() {
     for (let i = 0; i < hourlyTemperatures?.length; i++) {
         hourlyForecastArray.push(
             {
-                hour: theNext24Hours[i],
+                hour: String(theNext24Hours[i]).padStart(2, '0'),
                 temperature: hourlyTemperatures[i],
-                weathercode: hourlyWeatherCodes[i]
+                weathercode: hourlyWeatherCodes[i],
+                timeISO8601: new Date(hoursStandardized[i])
             }
         )
     }
@@ -162,7 +173,8 @@ function App() {
         <div className="App">
             {/* <img src={PhoneFrame} alt="" className="phone-frame" /> */}
             <div className="phone-wrapper">
-                <img src={isDay ? require('./images/Sunny-Background.jpeg') : require('./images/Night-Background.png')} alt="" className="weather-background" />
+                {console.log(isDay + "log here")}
+                {todaysSunriseHour !== undefined && weatherData !== undefined && <img src={isDay ? require('./images/Sunny-Background.jpeg') : require('./images/Night-Background.png')} alt="" className="weather-background" />}
                 <Hero region={weatherData? "San Francisco" : null}
                     currenttemp={weatherData?.current_weather?.temperature}
                     comment={wmoCodes[weatherData?.current_weather?.weathercode]}  
@@ -174,6 +186,18 @@ function App() {
                     <Hourly currentComment={currentComment}
                             hourlyForecastArray={hourlyForecastArray}
                             wmoCodesUrl={wmoCodesUrl}
+                            todaysSunriseHour={todaysSunriseHour}
+                            todaysSunsetHour={todaysSunsetHour}
+                            todaysSunriseMinutes={todaysSunriseMinutes}
+                            todaysSunsetMinutes={todaysSunsetMinutes}
+                            todaysSunset={todaysSunset}
+                            todaysSunrise={todaysSunrise}
+                            tmrwsSunriseHour={tmrwsSunriseHour}
+                            tmrwsSunsetHour={tmrwsSunsetHour}
+                            tmrwsSunriseMinutes={tmrwsSunriseMinutes}
+                            tmrwsSunsetMinutes={tmrwsSunsetMinutes}
+                            tmrwsSunset={tmrwsSunset}
+                            tmrwsSunrise={tmrwsSunrise}
                     />
                     <Future nextDays={weatherData?.daily} 
                             dayNameArray={upcomingWeek}
@@ -184,7 +208,7 @@ function App() {
                 : null}
 
                 {/*DUPLICAATION*/}
-                <Hero region={weatherData? "San Francisco" : null}
+                {/* <Hero region={weatherData? "San Francisco" : null}
                     currenttemp={weatherData?.current_weather?.temperature}
                     comment={wmoCodes[weatherData?.current_weather?.weathercode]}  
                     todayTempMin={weatherData?.daily?.temperature_2m_min[0]}
@@ -202,7 +226,7 @@ function App() {
                             currenttemp={weatherData?.current_weather?.temperature}
                     />
                 </div>
-                : null}
+                : null} */}
                 {/*DUPLICAATION*/}
             </div>
         </div>
