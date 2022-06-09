@@ -1,13 +1,16 @@
-import { useEffect, useState, React } from 'react';
+import { useEffect, useState, createContext, React } from 'react';
 import './App.css';
 import Hero from './components/Hero'
 import Future from './components/Future'
 import Hourly from './components/Hourly'
 import PhoneFrame from './images/iPhoneFrame.svg'
 
+export const IsDayContext = createContext()
+
 function App() {
 
     const [weatherData, setWeatherData] = useState({})
+    const [isDay, setIsDay] = useState(true)
 
     useEffect(() => {
         async function getWeatherData() {
@@ -24,6 +27,7 @@ function App() {
             // setWeatherData(WeatherData.data)
         }
         getWeatherData()
+        // console.log((timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes)))
     }, [])
 
     const wmoCodes = {
@@ -55,6 +59,7 @@ function App() {
     const daysOfWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
     const d = new Date();
     let hours = d.getHours();
+    let minutes = d.getMinutes();
     let nextHour = d.getHours(d.setHours(hours + 1));
     // let dayName = daysOfWeek[d.getDay()]
 
@@ -67,15 +72,46 @@ function App() {
         theNext24Hours.push(d.getHours(d.setHours(hours + i)))
     }
 
-    // console.log(theNext24Hours)
+    // console.log(hours + ":" + d.getMinutes())
+    // console.log(String(hours).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0'))
+    const todaysSunrise = (new Date(weatherData?.daily?.sunrise[0]))
+    const todaysSunriseHour = String(todaysSunrise?.getHours()).padStart(2, '0')
+    const todaysSunriseMinutes = String(todaysSunrise?.getMinutes()).padStart(2, '0')
+    
+    const todaysSunset = (new Date(weatherData?.daily?.sunset[0]))
+    const todaysSunsetHour = String(todaysSunset?.getHours()).padStart(2, '0')
+    const todaysSunsetMinutes = String(todaysSunset?.getMinutes()).padStart(2, '0')
+    
+    const tmrwsSunrise = (new Date(weatherData?.daily?.sunrise[1]))
+    const tmrwsSunriseHour = String(tmrwsSunrise?.getHours()).padStart(2, '0')
+    const tmrwsSunriseMinutes = String(tmrwsSunrise?.getMinutes()).padStart(2, '0')
+    
+    const tmrwsSunset = (new Date(weatherData?.daily?.sunset[1]))
+    const tmrwsSunsetHour = String(tmrwsSunset?.getHours()).padStart(2, '0')
+    const tmrwsSunsetMinutes = String(tmrwsSunset?.getMinutes()).padStart(2, '0')
 
-    // let upcomingWeek = [daysOfWeek[]]
-    // console.log(upcomingWeek)
+    const timeNowInMinutes = hours * 60 + minutes
+
+    // need to get the time in total minutes in a day
+    // consider 24hr time
+    // multiply hour amount by 60 to get minutes passed
+    // add minutes amount to get minute granularity
+    // compare timeNowInMinutes with sunrise/sunset in minutes to determine day/night
+    // Since we casted Sunset/Sunrise Hour/Minutes to a string, we need to cast it to a number
+    // if we want to compare the total minutes elapsed. Otherwise, a comparison between
+    // number and NaN will return false
+
+    useEffect(() => {
+        setIsDay((timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes)))
+    },[todaysSunriseHour])
+    // let isDay = (timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes))
+
     while (weatherData === undefined) {
         //loading placeholder
         return (
             <div className="App">
-                <div className="phone-wrapper" id={hours >= 6 && hours <= 20 ? 'sunny' : 'night'}>
+                <div className="phone-wrapper">
+                    <img src={require('./images/Sunny-Background.jpeg')} alt="" className="weather-background" />
                     <Hero region={"San Francisco"}
                         currenttemp={"--"} 
                     />
@@ -95,6 +131,7 @@ function App() {
     // const currentIndexTime = weatherData?.hourly?.time.indexOf(currentDateTimeISO)
     const hourlyTemperatures = weatherData?.hourly?.temperature_2m.slice(hours, hours+24)
     const hourlyWeatherCodes = weatherData?.hourly?.weathercode.slice(hours, hours+24)
+    const hoursStandardized = weatherData?.hourly?.time.slice(hours, hours+24)
 
     // console.log(hourlyTemperatures)
     // console.log(hourlyWeatherCodes)
@@ -103,6 +140,9 @@ function App() {
         "0": "Clear",
         "1": "Clear",
         "2": "Partly cloudy",
+        // "0": isDay ? "Clear" : "Clear night",
+        // "1": isDay ? "Clear" : "Clear night",
+        // "2": isDay ? "Partly cloudy" : "Cloudy night",
         "3": "Cloudy",
         "45": "Fog",
         "48": "Fog",
@@ -130,9 +170,10 @@ function App() {
     for (let i = 0; i < hourlyTemperatures?.length; i++) {
         hourlyForecastArray.push(
             {
-                hour: theNext24Hours[i],
+                hour: String(theNext24Hours[i]).padStart(2, '0'),
                 temperature: hourlyTemperatures[i],
-                weathercode: hourlyWeatherCodes[i]
+                weathercode: hourlyWeatherCodes[i],
+                timeISO8601: new Date(hoursStandardized[i])
             }
         )
     }
@@ -141,12 +182,10 @@ function App() {
 
     return (
         <div className="App">
-            
-            {/* id={hours >= 6 && hours <= 20 ? 'sunny' : 'night'} */}
             {/* <img src={PhoneFrame} alt="" className="phone-frame" /> */}
             <div className="phone-wrapper">
-                
-                <img src={require('./images/Sunny-Background.jpeg')} alt="" className="weather-background" />
+                {console.log(isDay + "log here")}
+                {todaysSunriseHour !== undefined && weatherData !== undefined && <img src={isDay ? require('./images/Sunny-Background.jpeg') : require('./images/Night-Background.png')} alt="" className="weather-background" />}
                 <Hero region={weatherData? "San Francisco" : null}
                     currenttemp={weatherData?.current_weather?.temperature}
                     comment={wmoCodes[weatherData?.current_weather?.weathercode]}  
@@ -158,17 +197,31 @@ function App() {
                     <Hourly currentComment={currentComment}
                             hourlyForecastArray={hourlyForecastArray}
                             wmoCodesUrl={wmoCodesUrl}
+                            todaysSunriseHour={todaysSunriseHour}
+                            todaysSunsetHour={todaysSunsetHour}
+                            todaysSunriseMinutes={todaysSunriseMinutes}
+                            todaysSunsetMinutes={todaysSunsetMinutes}
+                            todaysSunset={todaysSunset}
+                            todaysSunrise={todaysSunrise}
+                            tmrwsSunriseHour={tmrwsSunriseHour}
+                            tmrwsSunsetHour={tmrwsSunsetHour}
+                            tmrwsSunriseMinutes={tmrwsSunriseMinutes}
+                            tmrwsSunsetMinutes={tmrwsSunsetMinutes}
+                            tmrwsSunset={tmrwsSunset}
+                            tmrwsSunrise={tmrwsSunrise}
                     />
-                    <Future nextDays={weatherData?.daily} 
-                            dayNameArray={upcomingWeek}
-                            stringComment={wmoCodes[weatherData?.current_weather?.weathercode]}
-                            currenttemp={weatherData?.current_weather?.temperature}
-                    />
+                    <IsDayContext.Provider value={isDay}>
+                        <Future nextDays={weatherData?.daily} 
+                                dayNameArray={upcomingWeek}
+                                stringComment={wmoCodes[weatherData?.current_weather?.weathercode]}
+                                currenttemp={weatherData?.current_weather?.temperature}
+                        />
+                    </IsDayContext.Provider>
                 </div>
                 : null}
 
                 {/*DUPLICAATION*/}
-                <Hero region={weatherData? "San Francisco" : null}
+                {/* <Hero region={weatherData? "San Francisco" : null}
                     currenttemp={weatherData?.current_weather?.temperature}
                     comment={wmoCodes[weatherData?.current_weather?.weathercode]}  
                     todayTempMin={weatherData?.daily?.temperature_2m_min[0]}
@@ -186,7 +239,7 @@ function App() {
                             currenttemp={weatherData?.current_weather?.temperature}
                     />
                 </div>
-                : null}
+                : null} */}
                 {/*DUPLICAATION*/}
             </div>
         </div>
