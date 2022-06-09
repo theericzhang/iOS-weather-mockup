@@ -129,9 +129,9 @@ function App() {
     // console.log(hourlyWeatherCodes)
 
     const wmoCodesUrl = {
-        "0": "Clear",
-        "1": "Clear",
-        "2": "Partly cloudy",
+        "0": isDay ? "Clear" : "Clear night",
+        "1": isDay ? "Clear" : "Clear night",
+        "2": isDay ? "Partly cloudy" : "Cloudy night",
         "3": "Cloudy",
         "45": "Fog",
         "48": "Fog",
@@ -183,22 +183,24 @@ function App() {
                 />
                 {weatherData !== undefined && wmoCodes[weatherData?.hourly?.weathercode[1]] !== undefined
                 ? <div className="weather-modules">
-                    <Hourly currentComment={currentComment}
-                            hourlyForecastArray={hourlyForecastArray}
-                            wmoCodesUrl={wmoCodesUrl}
-                            todaysSunriseHour={todaysSunriseHour}
-                            todaysSunsetHour={todaysSunsetHour}
-                            todaysSunriseMinutes={todaysSunriseMinutes}
-                            todaysSunsetMinutes={todaysSunsetMinutes}
-                            todaysSunset={todaysSunset}
-                            todaysSunrise={todaysSunrise}
-                            tmrwsSunriseHour={tmrwsSunriseHour}
-                            tmrwsSunsetHour={tmrwsSunsetHour}
-                            tmrwsSunriseMinutes={tmrwsSunriseMinutes}
-                            tmrwsSunsetMinutes={tmrwsSunsetMinutes}
-                            tmrwsSunset={tmrwsSunset}
-                            tmrwsSunrise={tmrwsSunrise}
-                    />
+                    {/* <IsDayContext.Provider value={isDay}> */}
+                        <Hourly currentComment={currentComment}
+                                hourlyForecastArray={hourlyForecastArray}
+                                wmoCodesUrl={wmoCodesUrl}
+                                todaysSunriseHour={todaysSunriseHour}
+                                todaysSunsetHour={todaysSunsetHour}
+                                todaysSunriseMinutes={todaysSunriseMinutes}
+                                todaysSunsetMinutes={todaysSunsetMinutes}
+                                todaysSunset={todaysSunset}
+                                todaysSunrise={todaysSunrise}
+                                tmrwsSunriseHour={tmrwsSunriseHour}
+                                tmrwsSunsetHour={tmrwsSunsetHour}
+                                tmrwsSunriseMinutes={tmrwsSunriseMinutes}
+                                tmrwsSunsetMinutes={tmrwsSunsetMinutes}
+                                tmrwsSunset={tmrwsSunset}
+                                tmrwsSunrise={tmrwsSunrise}
+                        />
+                    {/* </IsDayContext.Provider> */}
                     <Future nextDays={weatherData?.daily} 
                             dayNameArray={upcomingWeek}
                             stringComment={wmoCodes[weatherData?.current_weather?.weathercode]}

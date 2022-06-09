@@ -1,9 +1,10 @@
-import { number } from "prop-types";
-import React from "react";
+import { React } from "react";
+// import { IsDayContext } from './App';
 
 export default function HourlyTile ({ hour, temperature, wmoCodeImageLink}) {
     console.log(`${wmoCodeImageLink}.png`)
 
+    // const isDay = useContext(IsDayContext)
     const temperatureField = (temperature === "Sunset" || temperature === "Sunrise") ? temperature : Math.floor(temperature)+"°" 
     const sunrisesetStyles = {
         padding: "0 14px",

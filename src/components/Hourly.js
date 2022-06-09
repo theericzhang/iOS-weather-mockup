@@ -127,7 +127,7 @@ export default function Hourly ({ currentComment,
     // Again, note the .slice() function we're applying here to keep things immutable (We're making a 
     // shallow copy of the array before we act on it using the .filter() function.)
 
-    const tilesComplete = tilesSorted.slice().filter(tile => tile.props.timeISO8601 > hourlyForecastArray[0].timeISO8601 && tile.props.timeISO8601 < hourlyForecastArray[23].timeISO8601)
+    const tilesComplete = tilesSorted.slice().filter(tile => tile.props.timeISO8601 >= hourlyForecastArray[0].timeISO8601 && tile.props.timeISO8601 <= hourlyForecastArray[23].timeISO8601)
     
     return (
         <section className="hourly-wrapper">
