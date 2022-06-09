@@ -1,14 +1,15 @@
-import { useEffect, useState, useContext, React } from 'react';
+import { useEffect, useState, createContext, React } from 'react';
 import './App.css';
 import Hero from './components/Hero'
 import Future from './components/Future'
 import Hourly from './components/Hourly'
 import PhoneFrame from './images/iPhoneFrame.svg'
 
+export const IsDayContext = createContext()
+
 function App() {
 
     const [weatherData, setWeatherData] = useState({})
-    // const IsDayContext = useContext()
 
     useEffect(() => {
         async function getWeatherData() {
@@ -183,29 +184,29 @@ function App() {
                 />
                 {weatherData !== undefined && wmoCodes[weatherData?.hourly?.weathercode[1]] !== undefined
                 ? <div className="weather-modules">
-                    {/* <IsDayContext.Provider value={isDay}> */}
-                        <Hourly currentComment={currentComment}
-                                hourlyForecastArray={hourlyForecastArray}
-                                wmoCodesUrl={wmoCodesUrl}
-                                todaysSunriseHour={todaysSunriseHour}
-                                todaysSunsetHour={todaysSunsetHour}
-                                todaysSunriseMinutes={todaysSunriseMinutes}
-                                todaysSunsetMinutes={todaysSunsetMinutes}
-                                todaysSunset={todaysSunset}
-                                todaysSunrise={todaysSunrise}
-                                tmrwsSunriseHour={tmrwsSunriseHour}
-                                tmrwsSunsetHour={tmrwsSunsetHour}
-                                tmrwsSunriseMinutes={tmrwsSunriseMinutes}
-                                tmrwsSunsetMinutes={tmrwsSunsetMinutes}
-                                tmrwsSunset={tmrwsSunset}
-                                tmrwsSunrise={tmrwsSunrise}
-                        />
-                    {/* </IsDayContext.Provider> */}
-                    <Future nextDays={weatherData?.daily} 
-                            dayNameArray={upcomingWeek}
-                            stringComment={wmoCodes[weatherData?.current_weather?.weathercode]}
-                            currenttemp={weatherData?.current_weather?.temperature}
+                    <Hourly currentComment={currentComment}
+                            hourlyForecastArray={hourlyForecastArray}
+                            wmoCodesUrl={wmoCodesUrl}
+                            todaysSunriseHour={todaysSunriseHour}
+                            todaysSunsetHour={todaysSunsetHour}
+                            todaysSunriseMinutes={todaysSunriseMinutes}
+                            todaysSunsetMinutes={todaysSunsetMinutes}
+                            todaysSunset={todaysSunset}
+                            todaysSunrise={todaysSunrise}
+                            tmrwsSunriseHour={tmrwsSunriseHour}
+                            tmrwsSunsetHour={tmrwsSunsetHour}
+                            tmrwsSunriseMinutes={tmrwsSunriseMinutes}
+                            tmrwsSunsetMinutes={tmrwsSunsetMinutes}
+                            tmrwsSunset={tmrwsSunset}
+                            tmrwsSunrise={tmrwsSunrise}
                     />
+                    <IsDayContext.Provider value={isDay}>
+                        <Future nextDays={weatherData?.daily} 
+                                dayNameArray={upcomingWeek}
+                                stringComment={wmoCodes[weatherData?.current_weather?.weathercode]}
+                                currenttemp={weatherData?.current_weather?.temperature}
+                        />
+                    </IsDayContext.Provider>
                 </div>
                 : null}
 

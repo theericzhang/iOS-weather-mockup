@@ -1,9 +1,13 @@
-import React from 'react'
+import { React, useContext } from 'react'
 import PartlyCloudy from '../images/Partly cloudy.png'
 import Clear from '../images/Clear.png'
 import Cloudy from '../images/Cloudy.png'
+import { IsDayContext } from '../App';
 
 export default function WeatherDay ({index, day, comment, maxF, minF, maxRange, absMin, absMax, currenttemp}) {
+    
+    const isDay = useContext(IsDayContext)
+    console.log(isDay)
     let imgUrl = ""
     
     switch (comment.toLowerCase()) {
