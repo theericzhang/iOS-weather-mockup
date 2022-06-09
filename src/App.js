@@ -1,4 +1,4 @@
-import { useEffect, useState, React } from 'react';
+import { useEffect, useState, useContext, React } from 'react';
 import './App.css';
 import Hero from './components/Hero'
 import Future from './components/Future'
@@ -8,6 +8,7 @@ import PhoneFrame from './images/iPhoneFrame.svg'
 function App() {
 
     const [weatherData, setWeatherData] = useState({})
+    // const IsDayContext = useContext()
 
     useEffect(() => {
         async function getWeatherData() {
@@ -55,6 +56,7 @@ function App() {
     const daysOfWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
     const d = new Date();
     let hours = d.getHours();
+    let minutes = d.getMinutes();
     let nextHour = d.getHours(d.setHours(hours + 1));
     // let dayName = daysOfWeek[d.getDay()]
 
@@ -68,9 +70,23 @@ function App() {
     }
 
     // console.log(hours + ":" + d.getMinutes())
-    console.log(String(hours).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0'))
-    let isDay = hours >= 6 && hours <= 20
-    // console.log(theNext24Hours)
+    // console.log(String(hours).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0'))
+    const todaysSunrise = (new Date(weatherData?.daily?.sunrise[0]))
+    const todaysSunriseHour = todaysSunrise.getHours()
+    const todaysSunriseMinutes = todaysSunrise.getMinutes()
+    
+    const todaysSunset = (new Date(weatherData?.daily?.sunset[0]))
+    const todaysSunsetHour = todaysSunset.getHours()
+    const todaysSunsetMinutes = todaysSunset.getMinutes()
+
+    const timeNowInMinutes = hours * 60 + minutes
+
+    // need to get the time in total minutes in a day
+    // consider 24hr time
+    // multiply hour amount by 60 to get minutes passed
+    // add minutes amount to get minute granularity
+    // compare timeNowInMinutes with sunrise/sunset in minutes to determine day/night
+    let isDay = (timeNowInMinutes >= todaysSunriseHour * 60 + todaysSunriseMinutes) && (timeNowInMinutes <= todaysSunsetHour * 60 + todaysSunsetMinutes)
 
     // let upcomingWeek = [daysOfWeek[]]
     // console.log(upcomingWeek)
@@ -144,12 +160,9 @@ function App() {
 
     return (
         <div className="App">
-            
-            {/* id={hours >= 6 && hours <= 20 ? 'sunny' : 'night'} */}
             {/* <img src={PhoneFrame} alt="" className="phone-frame" /> */}
             <div className="phone-wrapper">
-                
-                <img src={require('./images/Sunny-Background.jpeg')} alt="" className="weather-background" />
+                <img src={isDay ? require('./images/Sunny-Background.jpeg') : require('./images/Night-Background.png')} alt="" className="weather-background" />
                 <Hero region={weatherData? "San Francisco" : null}
                     currenttemp={weatherData?.current_weather?.temperature}
                     comment={wmoCodes[weatherData?.current_weather?.weathercode]}  
