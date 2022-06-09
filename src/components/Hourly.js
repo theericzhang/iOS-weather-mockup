@@ -62,6 +62,8 @@ export default function Hourly ({ currentComment,
     // Manually add the 4 sunset/sunrise values rendered as HourlyTile:
     // sunrise today, tomorrow
     // sunset today, tomorrow
+    // for temperature prop, add "Sunrise/Sunset" text. We will properly
+    // perform typecasting on this in HourlyTile.js
 
     const tilesWithSunriseset = [
                                     ...tiles,
@@ -91,13 +93,41 @@ export default function Hourly ({ currentComment,
                                     />
                                 ]
 
+
+    // Since we manually injected 4 additional tiles into our tilesWithSunriseset
+    // they will be placed out of order (time-wise). The first 24 are placed in increasing hour
+    // from tiles. The manually added tiles are then placed after the 24, disrupting the order.
+    //
+    // Thus, we need to sort the array (keeping immutability in mind). Since each tile has a 
+    // timeISO8601 property, we can use that value to sort the array.
+    //
+    // Note the .slice() function - we do NOT want to make a direct mutation to 
+    // the array, so by performing a .slice() operation, we are able to return a shallow copy
+    // of tilesWithSunriseset that we can then use the .sort() function.
+
+    
     const tilesSorted = tilesWithSunriseset.slice().sort((a, b) => {
         return new Date(a.props.timeISO8601) - new Date(b.props.timeISO8601)
     })
 
-    const tilesComplete = tilesSorted.slice().filter(tile => tile.props.timeISO8601 > hourlyForecastArray[0].timeISO8601 && tile.props.timeISO8601 < hourlyForecastArray[23].timeISO8601)
+    // Although the entire array is sorted now, there are a few problems:
+    // 1) The current time can be after today's sunrise and sunset
+    // 2) It can show tonight's sunset, tomorrow's sunrise AND sunset
+    //
+    // We need to filter these specific conditions so they don't introduce 
+    // confusion. 
+    //
+    // Since we know that the hourlyForecastArray[0] is the absolute NOW, we can
+    // say - IF the timeISO8601 is less than the timeISO8601 from any tile, filter that tile out
+    // This removes the case where there are sunset and sunrise tiles appeaaring before 
+    // the "Now" tile.
 
-    console.log(tilesComplete)
+    // By applying this same logic to the last member of the array (hourlyForecastArray[23]),
+    // we can filter out any EXTRA sunrise/sunset values.
+    // Again, note the .slice() function we're applying here to keep things immutable (We're making a 
+    // shallow copy of the array before we act on it using the .filter() function.)
+
+    const tilesComplete = tilesSorted.slice().filter(tile => tile.props.timeISO8601 > hourlyForecastArray[0].timeISO8601 && tile.props.timeISO8601 < hourlyForecastArray[23].timeISO8601)
     
     return (
         <section className="hourly-wrapper">
