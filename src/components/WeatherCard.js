@@ -217,7 +217,7 @@ export default function WeatherCard( { url } ) {
             </div>
             : null}
 
-            <Footer isDay={isDay}/>           
+                     
         </div>
     )
 }
