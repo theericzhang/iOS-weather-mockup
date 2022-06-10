@@ -402,3 +402,34 @@
     min-width: calc(2 * 43px);
     align-items: center;
 }
+
+.footer-wrapper {
+    width: 100%;
+    min-height: calc(2 * 56.75px);
+    background-color: #5390CF;
+    border-top: calc(2 * 0.125px) solid rgb(255 255 255 / 17%);
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    border-bottom-left-radius: calc(2 * 7.5px);
+    border-bottom-right-radius: calc(2 * 7.5px);
+}
+
+.footer-inner-wrapper {
+    padding: 0 calc(2 * 15px);
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+
+.cities-list-button {
+    justify-self: flex-end;
+    padding: calc(2 * 11px) 0;
+    border: none;
+    background-color: transparent;
+}
+
+.cities-list-icon {
+    width: calc(2 * 13.75px);
+    justify-self: flex-end;
+}

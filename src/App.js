@@ -3,6 +3,7 @@ import './App.css';
 import Hero from './components/Hero'
 import Future from './components/Future'
 import Hourly from './components/Hourly'
+import Footer from './components/Footer';
 import PhoneFrame from './images/iPhoneFrame.svg'
 
 export const IsDayContext = createContext()
@@ -219,6 +220,8 @@ function App() {
                     </IsDayContext.Provider>
                 </div>
                 : null}
+
+                <Footer />
 
                 {/*DUPLICAATION*/}
                 {/* <Hero region={weatherData? "San Francisco" : null}
