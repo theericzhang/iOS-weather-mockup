@@ -106,6 +106,10 @@
     scrollbar-width: none;
 }
 
+.component-wrapper {
+    
+}
+
 .phone-wrapper::-webkit-scrollbar {
     display: none;
 }

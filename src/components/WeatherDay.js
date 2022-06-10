@@ -2,7 +2,7 @@ import { React, useContext } from 'react'
 import PartlyCloudy from '../images/Partly cloudy.png'
 import Clear from '../images/Clear.png'
 import Cloudy from '../images/Cloudy.png'
-import { IsDayContext } from '../App';
+import { IsDayContext } from './WeatherCard';
 
 export default function WeatherDay ({index, day, comment, maxF, minF, maxRange, absMin, absMax, currenttemp}) {
     
