@@ -116,6 +116,7 @@ function App() {
                     <Hero region={"San Francisco"}
                         currenttemp={"--"} 
                     />
+                    <Footer />
                 </div>
             </div>
         )
@@ -221,7 +222,7 @@ function App() {
                 </div>
                 : null}
 
-                <Footer />
+                <Footer isDay={isDay}/>
 
                 {/*DUPLICAATION*/}
                 {/* <Hero region={weatherData? "San Francisco" : null}
