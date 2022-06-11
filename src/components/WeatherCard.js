@@ -5,8 +5,10 @@ import Hourly from './Hourly'
 import Footer from './Footer';
 
 export const IsDayContext = createContext()
+export const WeatherDataContext = createContext()
+export const TodaysSunriseHourContext = createContext()
 
-export default function WeatherCard( { url } ) {
+export default function WeatherCard( { url, receiveIsDay } ) {
     const [weatherData, setWeatherData] = useState({})
     const [isDay, setIsDay] = useState(true)
 
@@ -27,6 +29,10 @@ export default function WeatherCard( { url } ) {
         getWeatherData()
         // console.log((timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes)))
     }, [])
+
+    useEffect(() => {
+        receiveIsDay(isDay)
+    },[isDay])
 
     const wmoCodes = {
         "0": "Clear",
@@ -180,9 +186,9 @@ export default function WeatherCard( { url } ) {
     console.log(hourlyForecastArray)
     
     return (
-        <div className="phone-wrapper">
+        <div className="weather-card-wrapper">
             {console.log(isDay + "log here")}
-            {todaysSunriseHour !== undefined && weatherData !== undefined && <img src={isDay ? require('../images/Sunny-Background.jpeg') : require('../images/Night-Background.png')} alt="" className="weather-background" />}
+            {/* {todaysSunriseHour !== undefined && weatherData !== undefined && <img src={isDay ? require('../images/Sunny-Background.jpeg') : require('../images/Night-Background.png')} alt="" className="weather-background" />} */}
             <Hero region={weatherData? "San Francisco" : null}
                 currenttemp={weatherData?.current_weather?.temperature}
                 comment={wmoCodes[weatherData?.current_weather?.weathercode]}  

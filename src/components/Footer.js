@@ -1,8 +1,6 @@
-import { React, useContext } from 'react';
-import { IsDayContext } from './WeatherCard';
+import { React } from 'react';
 
-export default function Footer() {
-    const isDay = useContext(IsDayContext)
+export default function Footer(isDay) {
     return (
         <div className="footer-wrapper" id={isDay? "daytime" : "nighttime"}>
             <div className="footer-inner-wrapper">
