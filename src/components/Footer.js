@@ -1,6 +1,6 @@
 import { React } from 'react';
 
-export default function Footer(isDay) {
+export default function Footer({ isDay }) {
     return (
         <div className="footer-wrapper" id={isDay? "daytime" : "nighttime"}>
             <div className="footer-inner-wrapper">

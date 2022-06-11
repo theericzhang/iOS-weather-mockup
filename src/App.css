@@ -106,6 +106,7 @@
     position: relative;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    border-radius: 15px;
 }
 
 .weather-card-carousel {

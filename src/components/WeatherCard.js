@@ -30,9 +30,9 @@ export default function WeatherCard( { url, receiveIsDay } ) {
         // console.log((timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes)))
     }, [])
 
-    useEffect(() => {
-        receiveIsDay(isDay)
-    },[isDay])
+    // useEffect(() => {
+    //     receiveIsDay(isDay)
+    // },[isDay])
 
     const wmoCodes = {
         "0": "Clear",
@@ -107,7 +107,8 @@ export default function WeatherCard( { url, receiveIsDay } ) {
 
     useEffect(() => {
         setIsDay((timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes)))
-    },[todaysSunriseHour])
+        receiveIsDay(isDay)
+    },[todaysSunriseHour, isDay])
     // let isDay = (timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes))
 
     while (weatherData === undefined) {
@@ -183,7 +184,6 @@ export default function WeatherCard( { url, receiveIsDay } ) {
         )
     }
 
-    console.log(hourlyForecastArray)
     
     return (
         <div className="weather-card-wrapper">
