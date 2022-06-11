@@ -132,6 +132,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
     scroll-snap-align: start;
+    scroll-snap-stop: always;
     flex-shrink: 0;
 }
 
@@ -147,6 +148,7 @@
     display: flex;
     flex-direction: column;
     row-gap: calc(2 * 8px);
+    margin-bottom: calc(2 * 56.75px);
 }
 
 .header-wrapper {
