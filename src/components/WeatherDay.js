@@ -2,12 +2,14 @@ import { React, useContext } from 'react'
 import PartlyCloudy from '../images/Partly cloudy.png'
 import Clear from '../images/Clear.png'
 import Cloudy from '../images/Cloudy.png'
-import { IsDayContext } from '../App';
+import Fog from '../images/Fog.png'
+import SlightRain from '../images/Drizzle.png'
+import { IsDayContext } from './WeatherCard';
 
 export default function WeatherDay ({index, day, comment, maxF, minF, maxRange, absMin, absMax, currenttemp}) {
     
     const isDay = useContext(IsDayContext)
-    console.log(isDay)
+    // console.log(isDay)
     let imgUrl = ""
     
     switch (comment.toLowerCase()) {
@@ -20,9 +22,12 @@ export default function WeatherDay ({index, day, comment, maxF, minF, maxRange, 
         case "mostly sunny":
             imgUrl = Clear
             break;
+        case "mostly clear":
+            imgUrl = Clear
+            break;
         case "partly sunny":
-        imgUrl = Clear
-        break;
+            imgUrl = Clear
+            break;
         case "sunny":
             imgUrl = Clear
             break;
@@ -32,8 +37,17 @@ export default function WeatherDay ({index, day, comment, maxF, minF, maxRange, 
         case "cloudy":
             imgUrl = Cloudy
             break;
+        case "fog":
+            imgUrl = Fog
+            break;
+        case "fog night":
+            imgUrl = Fog
+            break;
+        case "slight rain":
+            imgUrl = SlightRain
+            break;
         default:
-            console.log("no corresponding image found")
+            console.log("no corresponding image found " + comment.toLowerCase())
     }
 
     const gradientbarfilled = {
