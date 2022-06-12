@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext, useRef, React } from "react";
+import { useEffect, useState, createContext, React } from "react";
 import Hero from './Hero'
 import Future from './Future'
 import Hourly from './Hourly'
