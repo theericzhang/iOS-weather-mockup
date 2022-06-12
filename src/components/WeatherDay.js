@@ -7,7 +7,7 @@ import { IsDayContext } from './WeatherCard';
 export default function WeatherDay ({index, day, comment, maxF, minF, maxRange, absMin, absMax, currenttemp}) {
     
     const isDay = useContext(IsDayContext)
-    console.log(isDay)
+    // console.log(isDay)
     let imgUrl = ""
     
     switch (comment.toLowerCase()) {
@@ -20,9 +20,12 @@ export default function WeatherDay ({index, day, comment, maxF, minF, maxRange, 
         case "mostly sunny":
             imgUrl = Clear
             break;
+        case "mostly clear":
+            imgUrl = Clear
+            break;
         case "partly sunny":
-        imgUrl = Clear
-        break;
+            imgUrl = Clear
+            break;
         case "sunny":
             imgUrl = Clear
             break;
@@ -33,7 +36,7 @@ export default function WeatherDay ({index, day, comment, maxF, minF, maxRange, 
             imgUrl = Cloudy
             break;
         default:
-            console.log("no corresponding image found")
+            console.log("no corresponding image found" + comment.toLowerCase())
     }
 
     const gradientbarfilled = {

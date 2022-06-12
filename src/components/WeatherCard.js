@@ -1,16 +1,28 @@
-import { useEffect, useState, createContext, React } from "react";
+import { useEffect, useState, createContext, useRef, React } from "react";
 import Hero from './Hero'
 import Future from './Future'
 import Hourly from './Hourly'
 import Footer from './Footer';
+import { useInView } from 'react-intersection-observer'
 
 export const IsDayContext = createContext()
 export const WeatherDataContext = createContext()
 export const TodaysSunriseHourContext = createContext()
 
-export default function WeatherCard( { url, receiveIsDay } ) {
+export default function WeatherCard( { url, receiveIsDay, receiveCardIsVisible, index } ) {
     const [weatherData, setWeatherData] = useState({})
     const [isDay, setIsDay] = useState(true)
+    // const cardRef = useRef()
+    // const [cardIsVisible, setCardIsVisible] = useState()
+
+    const { ref: cardRef, inView: cardIsVisible } = useInView({threshold: 0.5})
+
+    useEffect(() => {
+        receiveCardIsVisible(cardIsVisible, index)
+        console.log("card " + index + " was set to" + cardIsVisible)
+    }, [cardIsVisible])
+
+    // console.log("weather card", cardIsVisible)
 
     useEffect(() => {
         async function getWeatherData() {
@@ -27,6 +39,12 @@ export default function WeatherCard( { url, receiveIsDay } ) {
             // setWeatherData(WeatherData.data)
         }
         getWeatherData()
+        // console.log("card element ", cardRef.current)
+        // const observer = new IntersectionObserver((entries) => {
+        //     const entry = entries[0]
+        //     setCardIsVisible(entry.isIntersecting)
+        // })
+        // observer.observe(cardRef.current)
         // console.log((timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes)))
     }, [])
 
@@ -108,6 +126,7 @@ export default function WeatherCard( { url, receiveIsDay } ) {
     useEffect(() => {
         setIsDay((timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes)))
         receiveIsDay(isDay)
+        //CAUSES RERENDERING!!!!! 
     },[todaysSunriseHour, isDay])
     // let isDay = (timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes))
 
@@ -186,8 +205,7 @@ export default function WeatherCard( { url, receiveIsDay } ) {
 
     
     return (
-        <div className="weather-card-wrapper">
-            {console.log(isDay + "log here")}
+        <div className="weather-card-wrapper" ref={cardRef}>
             {/* {todaysSunriseHour !== undefined && weatherData !== undefined && <img src={isDay ? require('../images/Sunny-Background.jpeg') : require('../images/Night-Background.png')} alt="" className="weather-background" />} */}
             <Hero region={weatherData? "San Francisco" : null}
                 currenttemp={weatherData?.current_weather?.temperature}

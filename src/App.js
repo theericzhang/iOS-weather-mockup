@@ -7,19 +7,48 @@ import { IsDayContext } from './components/WeatherCard';
 
 function App() {
     const [isDay, setIsDay] = useState(true);
+    const [cardsArrayIsVisible, setCardsArrayIsVisible] = useState( [ false, false, false ] )
 
     function receiveIsDay(incomingIsDay) {
         setIsDay(incomingIsDay)
     }
+
+    function receiveCardIsVisible(cardIsVisible, index) {
+        setCardsArrayIsVisible(prevCardsArrayIsVisible => {
+            const tempCardsArrayIsVisible = []
+            for (let i = 0; i < prevCardsArrayIsVisible.length; i++) {
+                if (i === index) {
+                    tempCardsArrayIsVisible.push(cardIsVisible)
+                } else {
+                    tempCardsArrayIsVisible.push(prevCardsArrayIsVisible[i])
+                }
+            }
+            return tempCardsArrayIsVisible
+        })
+    }
+
+    console.log(cardsArrayIsVisible)
 
     return (
         <div className="App">
             <div className="phone-wrapper">
                 <img src={isDay ? require('./images/Sunny-Background.jpeg') : require('./images/Night-Background.png')} alt="" className="weather-background" />
                 <ul className="weather-card-carousel">
-                    <WeatherCard url={"https://api.open-meteo.com/v1/forecast?latitude=37.776549&longitude=-122.4964&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FLos_Angeles"} receiveIsDay={receiveIsDay}/>
-                    <WeatherCard url={"https://api.open-meteo.com/v1/forecast?latitude=37.776549&longitude=-122.4964&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FLos_Angeles"} receiveIsDay={receiveIsDay}/>
-                    <WeatherCard url={"https://api.open-meteo.com/v1/forecast?latitude=37.776549&longitude=-122.4964&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FLos_Angeles"} receiveIsDay={receiveIsDay}/>
+                    <WeatherCard url={"https://api.open-meteo.com/v1/forecast?latitude=37.776549&longitude=-122.4964&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FLos_Angeles"} 
+                                 receiveIsDay={receiveIsDay}
+                                 receiveCardIsVisible={receiveCardIsVisible}
+                                 index={0}
+                    />             
+                    <WeatherCard url={"https://api.open-meteo.com/v1/forecast?latitude=37.776549&longitude=-122.4964&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FLos_Angeles"} 
+                                 receiveIsDay={receiveIsDay}
+                                 receiveCardIsVisible={receiveCardIsVisible}
+                                 index={1}
+                    />             
+                    <WeatherCard url={"https://api.open-meteo.com/v1/forecast?latitude=37.776549&longitude=-122.4964&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FLos_Angeles"} 
+                                 receiveIsDay={receiveIsDay}
+                                 receiveCardIsVisible={receiveCardIsVisible}
+                                 index={2}
+                    />
                 </ul>
                 <Footer isDay={isDay}/>  
             </div> 
