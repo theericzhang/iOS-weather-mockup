@@ -1,7 +1,7 @@
 import { React } from 'react';
 import { nanoid } from 'nanoid';
 
-export default function Footer({ isDay, cardsArrayIsVisible }) {
+export default function Footer({ isDay, cardsArrayIsVisible, showCities }) {
     const light = {
         opacity: 1
     }
@@ -14,14 +14,14 @@ export default function Footer({ isDay, cardsArrayIsVisible }) {
         if (card === true) {
             return (
                 <div className="dot-wrapper"
-                     id={nanoid()}>
+                     key={nanoid()}>
                     <div className="dot" style={light}/>
                 </div>
             )
         } else {
             return (
                 <div className="dot-wrapper"
-                     id={nanoid()}>
+                     key={nanoid()}>
                     <div className="dot" style={dark}/>
                 </div>
             )
@@ -35,7 +35,7 @@ export default function Footer({ isDay, cardsArrayIsVisible }) {
                     <img src={require(`../images/location.png`)} alt="" className="location-icon" />
                     {dotsPagination}
                 </div>
-                <button className="cities-list-button">
+                <button className="cities-list-button" onClick={showCities}>
                     <img src={require(`../images/list-button.png`)} alt="" className="cities-list-icon" />
                 </button>
             </div>
