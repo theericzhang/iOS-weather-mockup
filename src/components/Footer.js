@@ -10,18 +10,20 @@ export default function Footer({ isDay, cardsArrayIsVisible, showCities }) {
         opacity: 0.55
     }
 
-    const dotsPagination = cardsArrayIsVisible.map(card => {
+    const dotsPagination = cardsArrayIsVisible.map((card, index) => {
         if (card === true) {
             return (
                 <div className="dot-wrapper"
-                     key={nanoid()}>
+                     key={index}
+                     >
                     <div className="dot" style={light}/>
                 </div>
             )
         } else {
             return (
                 <div className="dot-wrapper"
-                     key={nanoid()}>
+                     key={index}
+                     >
                     <div className="dot" style={dark}/>
                 </div>
             )
