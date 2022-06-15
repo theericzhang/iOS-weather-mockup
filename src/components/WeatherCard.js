@@ -9,7 +9,7 @@ export const IsDayContext = createContext()
 export const WeatherDataContext = createContext()
 export const TodaysSunriseHourContext = createContext()
 
-export default function WeatherCard( { url, receiveIsDay, receiveCardIsVisible, index } ) {
+export default function WeatherCard( { url, receiveIsDay, receiveCardIsVisible, index, setCitiesOverviewData } ) {
     const [weatherData, setWeatherData] = useState({})
     const [isDay, setIsDay] = useState(true)
     // const cardRef = useRef()
@@ -129,6 +129,27 @@ export default function WeatherCard( { url, receiveIsDay, receiveCardIsVisible, 
         //CAUSES RERENDERING!!!!! 
     },[todaysSunriseHour, isDay])
     // let isDay = (timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes))
+
+    useEffect(() => {
+        setCitiesOverviewData(prevCitiesOverviewData => {
+            const tempArray = []
+            for (let i = 0; i < prevCitiesOverviewData?.length; i++) {
+                if (i === index) {
+                    tempArray.push(
+                        {
+                            "currenttemp": Math.round(weatherData?.current_weather?.temperature),
+                            "comment": wmoCodes[weatherData?.current_weather?.weathercode],
+                            "todayTempHigh": Math.round(weatherData?.daily?.temperature_2m_max[0]),
+                            "todayTempLow": Math.round(weatherData?.daily?.temperature_2m_min[0])
+                        }
+                    )
+                } else {
+                    tempArray.push(prevCitiesOverviewData[i])
+                }
+            }
+            return tempArray
+        })
+    },[weatherData])
 
     while (weatherData === undefined) {
         //loading placeholder

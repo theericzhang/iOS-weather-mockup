@@ -1,10 +1,9 @@
-import { React, useContext, useState } from 'react';
+import { React, useContext, useRef, useState, useEffect } from 'react';
 import './App.css';
 import WeatherCard from './components/WeatherCard';
 import Footer from './components/Footer';
-import Cities from './components/Cities';
+import CitiesOverview from './components/CitiesOverview';
 import { IsDayContext } from './components/WeatherCard';
-import { useEffect } from '@storybook/addons';
 // import PhoneFrame from './images/iPhoneFrame.svg'
 
 function App() {
@@ -32,6 +31,7 @@ function App() {
         ]
     )
     
+    const [citiesOverviewData, setCitiesOverviewData] = useState(Array(citiesLatLng.length))
     const [cardsArrayIsVisible, setCardsArrayIsVisible] = useState(Array(citiesLatLng.length).fill(false))
 
     const citiesList = citiesLatLng.map((city, index) => {
@@ -40,9 +40,16 @@ function App() {
                      receiveCardIsVisible={receiveCardIsVisible}
                      index={index}
                      key={index}
+                     setCitiesOverviewData={setCitiesOverviewData}
         />
     })
 
+    // useEffect(() => {
+    //     gsap.from(citiesOverviewRefChildren(".cities-wrapper"), {
+    //         opacity: 0,
+    //         duration: "0.25s"
+    //     })
+    // },[isCitiesVisible])
 
     function receiveIsDay(incomingIsDay) {
         setIsDay(incomingIsDay)
@@ -66,7 +73,7 @@ function App() {
         setIsCitiesVisible(prevIsCitiesVisible => !prevIsCitiesVisible)
     }
 
-    console.log(cardsArrayIsVisible)
+    console.log(citiesOverviewData)
 
     return (
         <div className="App">
@@ -74,29 +81,12 @@ function App() {
                 <img src={isDay ? require('./images/Sunny-Background.jpeg') : require('./images/Night-Background.png')} alt="" className="weather-background" />
                 <ul className="weather-card-carousel">
                     {citiesList}
-                    {/* <WeatherCard url={"https://api.open-meteo.com/v1/forecast?latitude=37.776549&longitude=-122.4964&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FLos_Angeles"} 
-                                 receiveIsDay={receiveIsDay}
-                                 receiveCardIsVisible={receiveCardIsVisible}
-                                 index={0}
-                    />
-                    LA             
-                    <WeatherCard url={"https://api.open-meteo.com/v1/forecast?latitude=34.0522&longitude=-118.2437&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FLos_Angeles"} 
-                                 receiveIsDay={receiveIsDay}
-                                 receiveCardIsVisible={receiveCardIsVisible}
-                                 index={1}
-                    />
-                    SHANGHAI
-                    <WeatherCard url={"https://api.open-meteo.com/v1/forecast?latitude=31.2304&longitude=121.4737&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FLos_Angeles"} 
-                                 receiveIsDay={receiveIsDay}
-                                 receiveCardIsVisible={receiveCardIsVisible}
-                                 index={2}
-                    /> */}
                 </ul>
                 <Footer isDay={isDay}
                         cardsArrayIsVisible={cardsArrayIsVisible}
                         showCities={showCities}
                 />  
-                {isCitiesVisible && <Cities/>}
+                {isCitiesVisible && <CitiesOverview citiesOverviewData={citiesOverviewData} />}
             </div> 
         </div>
     )

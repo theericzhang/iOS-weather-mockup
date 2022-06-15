@@ -531,4 +531,104 @@ hourly-wrapper:before {
     height: 100%;
     width: 100%;
     background-color: black;
+    transition: opacity 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    z-index: 3;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.weather-header {
+    font-weight: 700;
+    font-size: calc(2 * 23.75px);
+    line-height: 113px;
+    letter-spacing: -0.02em;
+    align-self: flex-start;
+    padding: 0 calc(2 * 15px);
+    margin-bottom: 0;
+}
+
+.weather-tiles-wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(2 * 7.5px);
+}
+
+.c-o-t-wrapper {
+    display: flex;
+    width: calc(2 * 262.5px);
+    height: calc(2 * 77.5px);
+    justify-content: space-between;
+    background-color: #3874B0;
+    border-radius: calc(2 * 14.5px);
+}
+
+.c-o-t-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: calc(2 * 13px);
+    justify-content: space-between;
+}
+
+.c-o-t-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: calc(2 * 13px);
+    justify-content: space-between;
+}
+
+.c-o-t-left-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.day-h-l {
+    display: flex;
+    flex-direction: row;
+}
+
+.city-name {
+    font-weight: 700;
+    font-size: calc(2 * 15.25px);
+    letter-spacing: -0.01em;
+    margin-top: calc(2 * 7.25px);
+    margin-bottom: 0;
+    filter: drop-shadow(0 0 0.75rem rgb(60, 60, 60));
+}
+
+.time {
+    font-weight: 500;
+    font-size: calc(2 * 9.5px);
+    letter-spacing: 0.01em;
+    color: #7CB8F7;
+    filter: drop-shadow(0 0 0.75rem rgb(60, 60, 60));
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.c-o-t-comment {
+    font-weight: 500;
+    font-size: calc(2 * 9.5px);
+    letter-spacing: 0.01em;
+    color: #7CB8F7;
+    filter: drop-shadow(0 0 0.75rem rgb(60, 60, 60));
+    margin-bottom: calc(2 * 10px);
+}
+
+.c-o-t-temperature {
+    font-weight: 300;
+    font-size: calc(2 * 31.25px);
+    filter: drop-shadow(0 0 0.75rem rgb(60, 60, 60));
+    margin-top: calc(2 * 3.25px);
+    margin-bottom: 0;
+}
+
+.h-l {
+    margin-bottom: calc(2 * 10px);
+    font-size: calc(2 * 9px);
+    padding: 0 3px;
 }
