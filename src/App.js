@@ -5,6 +5,9 @@ import Footer from './components/Footer';
 import CitiesOverview from './components/CitiesOverview';
 import { IsDayContext } from './components/WeatherCard';
 // import PhoneFrame from './images/iPhoneFrame.svg'
+const {REACT_APP_CITIES_NAME_KEY} = process.env
+
+console.log(process.env)
 
 function App() {
     const [isDay, setIsDay] = useState(true);
@@ -34,6 +37,36 @@ function App() {
     const [citiesOverviewData, setCitiesOverviewData] = useState(Array(citiesLatLng.length))
     const [cardsArrayIsVisible, setCardsArrayIsVisible] = useState(Array(citiesLatLng.length).fill(false))
 
+    const citiesNameDataUrl = citiesLatLng.map(item => {
+        return `http://api.positionstack.com/v1/reverse?access_key=${REACT_APP_CITIES_NAME_KEY}&query=${item.lat},${item.long}` 
+    })
+
+    const [citiesNameArray, setCitiesNameArray] = useState(Array(citiesLatLng.length))
+
+    async function getCitiesName(index, url) {
+        const res = await fetch(url)
+        const data = await res.json()
+        console.log("fetching here")
+        setCitiesNameArray(prevCitiesNameArray => {
+            const tempArray = []
+            for (let i = 0; i < prevCitiesNameArray.length; i++) {
+                if (i === index) {
+                    tempArray.push(data?.data[0]?.locality)
+                } else {
+                    tempArray.push(prevCitiesNameArray[i])
+                }
+            }
+            return tempArray
+            
+        })
+    }
+
+    useEffect(() => {    
+        for (let i = 0; i < citiesNameDataUrl.length; i++) {
+            getCitiesName(i, citiesNameDataUrl[i])
+        }
+    }, [])
+
     const citiesList = citiesLatLng.map((city, index) => {
         return <WeatherCard url={`https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.long}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FLos_Angeles`}
                      receiveIsDay={receiveIsDay}
@@ -43,13 +76,6 @@ function App() {
                      setCitiesOverviewData={setCitiesOverviewData}
         />
     })
-
-    // useEffect(() => {
-    //     gsap.from(citiesOverviewRefChildren(".cities-wrapper"), {
-    //         opacity: 0,
-    //         duration: "0.25s"
-    //     })
-    // },[isCitiesVisible])
 
     function receiveIsDay(incomingIsDay) {
         setIsDay(incomingIsDay)

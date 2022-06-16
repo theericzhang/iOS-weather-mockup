@@ -19,7 +19,6 @@ export default function WeatherCard( { url, receiveIsDay, receiveCardIsVisible, 
 
     useEffect(() => {
         receiveCardIsVisible(cardIsVisible, index)
-        console.log("card " + index + " was set to" + cardIsVisible)
     }, [cardIsVisible])
 
     // console.log("weather card", cardIsVisible)
