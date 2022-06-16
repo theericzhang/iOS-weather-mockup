@@ -7,8 +7,6 @@ import { IsDayContext } from './components/WeatherCard';
 // import PhoneFrame from './images/iPhoneFrame.svg'
 const {REACT_APP_CITIES_NAME_KEY} = process.env
 
-console.log(process.env)
-
 function App() {
     const [isDay, setIsDay] = useState(true);
     const [isCitiesVisible, setIsCitiesVisible] = useState(false)
@@ -46,7 +44,6 @@ function App() {
     async function getCitiesName(index, url) {
         const res = await fetch(url)
         const data = await res.json()
-        console.log("fetching here")
         setCitiesNameArray(prevCitiesNameArray => {
             const tempArray = []
             for (let i = 0; i < prevCitiesNameArray.length; i++) {
