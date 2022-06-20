@@ -9,7 +9,7 @@ export const IsDayContext = createContext()
 export const WeatherDataContext = createContext()
 export const TodaysSunriseHourContext = createContext()
 
-export default function WeatherCard( { url, receiveIsDay, receiveCardIsVisible, index, setCitiesOverviewData } ) {
+export default function WeatherCard( { url, receiveIsDay, receiveCardIsVisible, index, setCitiesOverviewData, cityName } ) {
     const [weatherData, setWeatherData] = useState({})
     const [isDay, setIsDay] = useState(true)
     // const cardRef = useRef()
@@ -156,7 +156,7 @@ export default function WeatherCard( { url, receiveIsDay, receiveCardIsVisible, 
             <div className="App">
                 <div className="phone-wrapper">
                     <img src={require('../images/Sunny-Background.jpeg')} alt="" className="weather-background" />
-                    <Hero region={"San Francisco"}
+                    <Hero region={""}
                         currenttemp={"--"} 
                     />
                     <Footer />
@@ -227,7 +227,7 @@ export default function WeatherCard( { url, receiveIsDay, receiveCardIsVisible, 
     return (
         <div className="weather-card-wrapper" ref={cardRef}>
             {/* {todaysSunriseHour !== undefined && weatherData !== undefined && <img src={isDay ? require('../images/Sunny-Background.jpeg') : require('../images/Night-Background.png')} alt="" className="weather-background" />} */}
-            <Hero region={weatherData? "San Francisco" : null}
+            <Hero region={weatherData && cityName? cityName : null}
                 currenttemp={weatherData?.current_weather?.temperature}
                 comment={wmoCodes[weatherData?.current_weather?.weathercode]}  
                 todayTempMin={weatherData?.daily?.temperature_2m_min[0]}

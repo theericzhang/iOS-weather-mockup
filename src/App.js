@@ -71,6 +71,7 @@ function App() {
                      index={index}
                      key={index}
                      setCitiesOverviewData={setCitiesOverviewData}
+                     cityName={citiesNameArray[index]}
         />
     })
 
