@@ -545,8 +545,28 @@ hourly-wrapper:before {
     line-height: 113px;
     letter-spacing: -0.02em;
     align-self: flex-start;
-    padding: 0 calc(2 * 15px);
+    padding: 0 calc(2 * 11px);
     margin-bottom: 0;
+}
+
+.cities-search-bar {
+    width: calc(2 * 247.25px);
+    height: calc(2 * 23.25px);
+    border-radius: calc(2 * 7px);
+    background-image: url(./images/magnifyingglass.png);
+    background-repeat: no-repeat;
+    background-position: 11.5px 50%;
+    padding-left: calc(2 * 20.125px);
+    background-color: #1C1C1E;
+    font-weight: 400;
+    font-size: calc(2 * 10.5px);
+    color: #9B9AA0;
+    letter-spacing: 0.03rem;
+    border: none;
+}
+
+.cities-search-bar::placeholder {
+    color: #9B9AA0;
 }
 
 .weather-tiles-wrapper {
