@@ -1,11 +1,11 @@
 import React from "react";
 
-export default function CitiesOverviewTile( { comment, currenttemp, todayTempHigh, todayTempLow } ) {
+export default function CitiesOverviewTile( { comment, currenttemp, todayTempHigh, todayTempLow, cityName } ) {
     return (
         <div className="c-o-t-wrapper">
             <div className="c-o-t-left">
                 <div className="c-o-t-left-top">
-                    <h4 className="city-name">Emeryville</h4>
+                    <h4 className="city-name">{cityName}</h4>
                     <h6 className="time">15:35</h6>
                 </div>
                 <h6 className="c-o-t-comment">{comment}</h6>

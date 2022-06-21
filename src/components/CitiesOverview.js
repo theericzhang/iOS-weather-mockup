@@ -3,7 +3,7 @@ import CitiesOverviewTile from "./CitiesOverviewTile"
 import { nanoid } from "nanoid"
 import { useSpring, animated, easings } from "react-spring"
 
-export default function CitiesOverview({ citiesOverviewData }) {
+export default function CitiesOverview({ citiesOverviewData, cityName }) {
     const animation = useSpring({ 
         to: { opacity: 1 }, 
         from: { opacity: 0 },
@@ -13,11 +13,12 @@ export default function CitiesOverview({ citiesOverviewData }) {
         }
     })
 
-    const citiesOverviewTiles = citiesOverviewData.map(tile => {
+    const citiesOverviewTiles = citiesOverviewData.map((tile, index) => {
         return <CitiesOverviewTile comment={tile.comment}
                                    currenttemp={tile.currenttemp}
                                    todayTempHigh={tile.todayTempHigh}
                                    todayTempLow={tile.todayTempLow}
+                                   cityName={cityName[index]}
                                    key={nanoid()}
                 />
     })

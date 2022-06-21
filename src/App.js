@@ -110,7 +110,10 @@ function App() {
                         cardsArrayIsVisible={cardsArrayIsVisible}
                         showCities={showCities}
                 />  
-                {isCitiesVisible && <CitiesOverview citiesOverviewData={citiesOverviewData} />}
+                {isCitiesVisible && <CitiesOverview citiesOverviewData={citiesOverviewData}
+                                                    cityName={citiesNameArray} 
+                                    />
+                }
             </div> 
         </div>
     )
