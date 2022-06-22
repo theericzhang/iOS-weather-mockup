@@ -1,4 +1,4 @@
-import React from "react"
+import { React, useState } from "react"
 import CitiesOverviewTile from "./CitiesOverviewTile"
 import { nanoid } from "nanoid"
 import { useSpring, animated, easings } from "react-spring"
@@ -23,13 +23,15 @@ export default function CitiesOverview({ citiesOverviewData, cityName }) {
                 />
     })
 
-    function focusHandler(e) {
-        console.log(e);
+    const [isFocusedOnInput, setIsFocusedOnInput] = useState(false)
+
+    function focusHandler() {
+        setIsFocusedOnInput(true)
         // set styles. namely opacity of weather-header and weather-tiles-wrapper to 0.25
     }
 
-    function blurHandler(e) {
-        console.log(e);
+    function blurHandler() {
+        setIsFocusedOnInput(false)
         // set styles. namely opacity of weather-header and weather-tiles-wrapper to 1
     }
 
@@ -38,13 +40,13 @@ export default function CitiesOverview({ citiesOverviewData, cityName }) {
             <form action="" className="city-query">
                 <input type="text" 
                        className="cities-search-bar"
-                       onFocus={(e) => focusHandler(e)}
-                       onBlur={(e) => blurHandler(e)} 
+                       onFocus={focusHandler}
+                       onBlur={blurHandler} 
                        placeholder="Search for a city" />
-                <button className="search-button">Search</button>
+                <button className="search-button" disabled={isFocusedOnInput? "false": "true"}>Search</button>
             </form>
-            <h2 className="weather-header">Weather</h2>
-            <div className="weather-tiles-wrapper">
+            <h2 className="weather-header" id={isFocusedOnInput ? "opacity-dark" : "opacity-light"}>Weather</h2>
+            <div className="weather-tiles-wrapper" id={isFocusedOnInput ? "opacity-dark" : "opacity-light"}>
                 {citiesOverviewTiles}
             </div>
         </animated.div>

@@ -595,8 +595,9 @@ hourly-wrapper:before {
 }
 
 .cities-search-bar:focus ~ .search-button {
-    display: block;
+    transition: opacity 0.17s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     background-color: #0079FE;
+    opacity: 1;
 }
 
 .cities-search-bar ~ .weather-tiles-wrapper {
@@ -619,8 +620,18 @@ hourly-wrapper:before {
     transition: opacity 0.17s cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
+#opacity-dark {
+    opacity: 0.5;
+    transition: opacity 0.17s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+#opacity-light {
+    opacity: 1;
+    transition: opacity 0.17s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
 .search-button {
-    display: none;
+    opacity: 0;
     width: calc(2 * 40px);
     height: calc(2 * 18px);
     position: absolute;
@@ -628,7 +639,12 @@ hourly-wrapper:before {
     border: none;
     border-radius: calc(2 * 4.75px);
     color: #FFF;
+    background-color: #0079FE;
     font-size: calc(2 * 9px);
+}
+
+.cities-search-bar:focus ~ .search-button:hover {
+    cursor: pointer;
 }
 
 .weather-tiles-wrapper {
