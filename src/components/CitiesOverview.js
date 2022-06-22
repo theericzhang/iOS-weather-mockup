@@ -25,8 +25,8 @@ export default function CitiesOverview({ citiesOverviewData, cityName }) {
 
     return (
         <animated.div className="cities-wrapper" style={animation}>
-            <h2 className="weather-header">Weather</h2>
             <input type="text" className="cities-search-bar" placeholder="Search for a city" />
+            <h2 className="weather-header">Weather</h2>
             <div className="weather-tiles-wrapper">
                 {citiesOverviewTiles}
             </div>
