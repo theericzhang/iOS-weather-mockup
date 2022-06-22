@@ -23,9 +23,26 @@ export default function CitiesOverview({ citiesOverviewData, cityName }) {
                 />
     })
 
+    function focusHandler(e) {
+        console.log(e);
+        // set styles. namely opacity of weather-header and weather-tiles-wrapper to 0.25
+    }
+
+    function blurHandler(e) {
+        console.log(e);
+        // set styles. namely opacity of weather-header and weather-tiles-wrapper to 1
+    }
+
     return (
         <animated.div className="cities-wrapper" style={animation}>
-            <input type="text" className="cities-search-bar" placeholder="Search for a city" />
+            <form action="" className="city-query">
+                <input type="text" 
+                       className="cities-search-bar"
+                       onFocus={(e) => focusHandler(e)}
+                       onBlur={(e) => blurHandler(e)} 
+                       placeholder="Search for a city" />
+                <button className="search-button">Search</button>
+            </form>
             <h2 className="weather-header">Weather</h2>
             <div className="weather-tiles-wrapper">
                 {citiesOverviewTiles}
