@@ -583,6 +583,10 @@ hourly-wrapper:before {
     color: #9B9AA0;
 }
 
+.cities-search-bar:focus {
+    outline: #3c3c3c solid 1px;
+}
+
 .cities-search-bar ~ .weather-tiles-wrapper {
     opacity: 1;
     transition: opacity 0.17s cubic-bezier(0.445, 0.05, 0.55, 0.95);
