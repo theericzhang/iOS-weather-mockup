@@ -2,6 +2,7 @@ import { React, useState } from "react"
 import CitiesOverviewTile from "./CitiesOverviewTile"
 import { nanoid } from "nanoid"
 import { useSpring, animated, easings } from "react-spring"
+import CitiesOverviewForm from "./CitiesOverviewForm"
 
 export default function CitiesOverview({ citiesOverviewData, cityName }) {
     const animation = useSpring({ 
@@ -35,16 +36,13 @@ export default function CitiesOverview({ citiesOverviewData, cityName }) {
         // set styles. namely opacity of weather-header and weather-tiles-wrapper to 1
     }
 
+
     return (
         <animated.div className="cities-wrapper" style={animation}>
-            <form action="" className="city-query">
-                <input type="text" 
-                       className="cities-search-bar"
-                       onFocus={focusHandler}
-                       onBlur={blurHandler} 
-                       placeholder="Search for a city" />
-                <button className="search-button" disabled={isFocusedOnInput? "false": "true"}>Search</button>
-            </form>
+            <CitiesOverviewForm focusHandler={focusHandler}
+                                blurHandler={blurHandler}
+                                isFocusedOnInput={isFocusedOnInput} 
+            />
             <h2 className="weather-header" id={isFocusedOnInput ? "opacity-dark" : "opacity-light"}>Weather</h2>
             <div className="weather-tiles-wrapper" id={isFocusedOnInput ? "opacity-dark" : "opacity-light"}>
                 {citiesOverviewTiles}

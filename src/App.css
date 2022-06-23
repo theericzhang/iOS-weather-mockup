@@ -581,7 +581,7 @@ hourly-wrapper:before {
     background-color: #1C1C1E;
     font-weight: 400;
     font-size: calc(2 * 10.5px);
-    color: #9B9AA0;
+    color: #FFF;
     letter-spacing: 0.03rem;
     border: none;
 }
