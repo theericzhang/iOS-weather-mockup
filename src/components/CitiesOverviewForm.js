@@ -26,8 +26,8 @@ export default function CitiesOverviewForm({ focusHandler,
                     disabled={(isFocusedOnInput || searchQuery !== '')? false: true}
                     type="submit"
                     id={searchQuery === '' ? "greyed-out-button" : "active-button"}
-                    onClick={(e) => handleSearchQuerySubmit(e)}>
-                        Search
+            >
+                Search
             </button>
         </form>
     )
