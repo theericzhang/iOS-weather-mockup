@@ -643,6 +643,18 @@ hourly-wrapper:before {
     font-size: calc(2 * 9px);
 }
 
+#greyed-out-button {
+    opacity: 0.25;
+}
+
+#active-button {
+    opacity: 1;
+}
+
+#active-button:hover {
+    cursor: pointer;
+}
+
 .cities-search-bar:focus ~ .search-button:hover {
     cursor: pointer;
 }
