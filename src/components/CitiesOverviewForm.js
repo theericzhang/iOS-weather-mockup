@@ -1,15 +1,37 @@
 import { React, useState } from "react"
 
+const {REACT_APP_CITIES_NAME_KEY} = process.env
+
 export default function CitiesOverviewForm({ focusHandler, 
                                              blurHandler,
                                              isFocusedOnInput }) 
 {
     const [searchQuery, setSearchQuery] = useState('')
-    console.log(searchQuery)
+    const [searchQueryLatLong, setSearchQueryLatLong] = useState({})
+
+    // search by turning the ${searchQuery} 
+    // into a pair of latitude/longitude coordinates. 
+
+    // With these coordinates, render an instance of WeatherCard.js as the preview
+    // before the user commits to adding it to the citiesLatLong array, which handles
+    // the rendering of complete array of citiesList (WeatherCard components)
+
+    async function grabCoordinates(searchQuery) {
+        const res = await fetch(`http://api.positionstack.com/v1/forward?access_key=${REACT_APP_CITIES_NAME_KEY}&query=${searchQuery}`)
+        const data = await res.json()
+        setSearchQueryLatLong(
+            {
+                "latitude": data.data.latitude,
+                "longitude": data.data.longitude
+            }
+        )
+    }
 
     function handleSearchQuerySubmit(e) {
         e?.preventDefault()
         console.log(`You typed ${searchQuery}`)
+        // grabCoordinates(searchQuery)
+        // console.log(searchQueryLatLong)
     }
 
     return (
