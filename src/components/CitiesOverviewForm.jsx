@@ -17,21 +17,24 @@ export default function CitiesOverviewForm({ focusHandler,
     // the rendering of complete array of citiesList (WeatherCard components)
 
     async function grabCoordinates(searchQuery) {
-        const res = await fetch(`http://api.positionstack.com/v1/forward?access_key=${VITE_NAME_CITIES_NAME_KEY}&query=${searchQuery}`)
+        const res = await fetch(`http://api.positionstack.com/v1/forward?access_key=${VITE_NAME_CITIES_NAME_KEY}&query=${searchQuery}&limit=1`)
         const data = await res.json()
-        setSearchQueryLatLong(
-            {
-                "latitude": data.data.latitude,
-                "longitude": data.data.longitude
-            }
-        )
+        if (data.data[0]?.latitude && data.data[0]?.longitude) {
+            setSearchQueryLatLong(
+                {
+                       "latitude": data?.data[0]?.latitude,
+                       "longitude": data?.data[0]?.longitude
+                }
+            )
+        } else {
+            alert("City could not be found, please try again")
+        }
     }
 
     function handleSearchQuerySubmit(e) {
         e?.preventDefault()
         console.log(`You typed ${searchQuery}`)
-        // grabCoordinates(searchQuery)
-        // console.log(searchQueryLatLong)
+        grabCoordinates(searchQuery)
     }
 
     return (
