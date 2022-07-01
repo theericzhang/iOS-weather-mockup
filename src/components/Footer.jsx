@@ -1,5 +1,7 @@
 import { React } from 'react';
 import { nanoid } from 'nanoid';
+import locationLogo from '../images/location.png'
+import listButtonLogo from '../images/list-button.png'
 
 export default function Footer({ isDay, cardsArrayIsVisible, showCities }) {
     const light = {
@@ -34,11 +36,11 @@ export default function Footer({ isDay, cardsArrayIsVisible, showCities }) {
         <div className="footer-wrapper" id={isDay? "daytime" : "nighttime"}>
             <div className="footer-inner-wrapper">
                 <div className="city-cards-logos">
-                    <img src={require(`../images/location.png`)} alt="" className="location-icon" />
+                    <img src={locationLogo} alt="" className="location-icon" />
                     {dotsPagination}
                 </div>
                 <button className="cities-list-button" onClick={showCities}>
-                    <img src={require(`../images/list-button.png`)} alt="" className="cities-list-icon" />
+                    <img src={listButtonLogo} alt="" className="cities-list-icon" />
                 </button>
             </div>
         </div>

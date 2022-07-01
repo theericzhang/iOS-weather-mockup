@@ -1,6 +1,6 @@
 import { React, useState } from "react"
 
-const {REACT_APP_CITIES_NAME_KEY} = process.env
+const {VITE_NAME_CITIES_NAME_KEY} = import.meta.env
 
 export default function CitiesOverviewForm({ focusHandler, 
                                              blurHandler,
@@ -17,7 +17,7 @@ export default function CitiesOverviewForm({ focusHandler,
     // the rendering of complete array of citiesList (WeatherCard components)
 
     async function grabCoordinates(searchQuery) {
-        const res = await fetch(`http://api.positionstack.com/v1/forward?access_key=${REACT_APP_CITIES_NAME_KEY}&query=${searchQuery}`)
+        const res = await fetch(`http://api.positionstack.com/v1/forward?access_key=${VITE_NAME_CITIES_NAME_KEY}&query=${searchQuery}`)
         const data = await res.json()
         setSearchQueryLatLong(
             {

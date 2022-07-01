@@ -3,9 +3,11 @@ import './App.css';
 import WeatherCard from './components/WeatherCard';
 import Footer from './components/Footer';
 import CitiesOverview from './components/CitiesOverview';
+import sunnyBackground from './images/Sunny-Background.jpeg'
+import nightBackground from './images/Night-Background.png'
 import { IsDayContext } from './components/WeatherCard';
 // import PhoneFrame from './images/iPhoneFrame.svg'
-const {REACT_APP_CITIES_NAME_KEY} = process.env
+const {VITE_NAME_CITIES_NAME_KEY} = import.meta.env
 
 function App() {
     const [isDay, setIsDay] = useState(true);
@@ -36,7 +38,7 @@ function App() {
     const [cardsArrayIsVisible, setCardsArrayIsVisible] = useState(Array(citiesLatLng.length).fill(false))
 
     const citiesNameDataUrl = citiesLatLng.map(item => {
-        return `http://api.positionstack.com/v1/reverse?access_key=${REACT_APP_CITIES_NAME_KEY}&query=${item.lat},${item.long}` 
+        return `http://api.positionstack.com/v1/reverse?access_key=${VITE_NAME_CITIES_NAME_KEY}&query=${item.lat},${item.long}` 
     })
 
     const [citiesNameArray, setCitiesNameArray] = useState(Array(citiesLatLng.length))
@@ -102,7 +104,7 @@ function App() {
     return (
         <div className="App">
             <div className="phone-wrapper">
-                <img src={isDay ? require('./images/Sunny-Background.jpeg') : require('./images/Night-Background.png')} alt="" className="weather-background" />
+                <img src={isDay ? sunnyBackground : nightBackground} alt="" className="weather-background" />
                 <ul className="weather-card-carousel">
                     {citiesList}
                 </ul>
