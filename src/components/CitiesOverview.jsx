@@ -4,7 +4,10 @@ import { nanoid } from "nanoid"
 import { useSpring, animated, easings } from "react-spring"
 import CitiesOverviewForm from "./CitiesOverviewForm"
 
-export default function CitiesOverview({ citiesOverviewData, cityName }) {
+export default function CitiesOverview({ citiesOverviewData, 
+                                         cityName, 
+                                         setCitiesLatLng }) 
+{
     const animation = useSpring({ 
         to: { opacity: 1 }, 
         from: { opacity: 0 },
@@ -41,7 +44,8 @@ export default function CitiesOverview({ citiesOverviewData, cityName }) {
         <animated.div className="cities-wrapper" style={animation}>
             <CitiesOverviewForm focusHandler={focusHandler}
                                 blurHandler={blurHandler}
-                                isFocusedOnInput={isFocusedOnInput} 
+                                isFocusedOnInput={isFocusedOnInput}
+                                setCitiesLatLng={setCitiesLatLng} 
             />
             <h2 className="weather-header" id={isFocusedOnInput ? "opacity-dark" : "opacity-light"}>Weather</h2>
             <div className="weather-tiles-wrapper" id={isFocusedOnInput ? "opacity-dark" : "opacity-light"}>
