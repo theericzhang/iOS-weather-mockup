@@ -37,8 +37,8 @@ export default function CitiesOverviewForm({ focusHandler,
 
             setCitiesLatLng(prevCitiesLatLng => [...prevCitiesLatLng, 
                                                 {
-                                                    "lat": 40.7128,
-                                                    "long": -73.935242
+                                                    "lat": data?.data[0]?.latitude,
+                                                    "long": data?.data[0]?.longitude
                                                 }
                                                 ]
             )
