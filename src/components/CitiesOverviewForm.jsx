@@ -1,13 +1,16 @@
-import { React, useState } from "react"
+import { React, useState, useContext } from "react"
+import CircularProgress from '@mui/material/CircularProgress'
 
 const {VITE_NAME_CITIES_NAME_KEY} = import.meta.env
 
 export default function CitiesOverviewForm({ focusHandler, 
                                              blurHandler,
-                                             isFocusedOnInput }) 
+                                             isFocusedOnInput,
+                                             setCitiesLatLng }) 
 {
     const [searchQuery, setSearchQuery] = useState('')
     const [searchQueryLatLong, setSearchQueryLatLong] = useState({})
+    const [isActivelySearching, setIsActivelySearching] = useState(false)
 
     // search by turning the ${searchQuery} 
     // into a pair of latitude/longitude coordinates. 
@@ -26,7 +29,20 @@ export default function CitiesOverviewForm({ focusHandler,
                        "longitude": data?.data[0]?.longitude
                 }
             )
+            setIsActivelySearching(false)
+            console.log(searchQueryLatLong)
+            // add these coordinates to the array of coordinates (app.jsx setCitiesLatLong)
+            // can I pass setCitiesLatLong as a function via context?
+
+            setCitiesLatLng(prevCitiesLatLng => [...prevCitiesLatLng, 
+                                                {
+                                                    "lat": 40.7128,
+                                                    "long": -73.935242
+                                                }
+                                                ]
+            )
         } else {
+            setIsActivelySearching(false)
             alert("City could not be found, please try again")
         }
     }
@@ -35,6 +51,7 @@ export default function CitiesOverviewForm({ focusHandler,
         e?.preventDefault()
         console.log(`You typed ${searchQuery}`)
         grabCoordinates(searchQuery)
+        setIsActivelySearching(true)
     }
 
     return (
@@ -47,13 +64,16 @@ export default function CitiesOverviewForm({ focusHandler,
                     onChange={(e) => setSearchQuery(e.target.value)}
                     value={searchQuery}
             />
-            <button className="search-button" 
+            <div className="search-progress-wrapper">
+                { isActivelySearching && <CircularProgress sx={{color: 'white'}} size={20} /> }
+                <button className="search-button" 
                     disabled={(isFocusedOnInput || searchQuery !== '')? false: true}
                     type="submit"
                     id={searchQuery === '' ? "greyed-out-button" : "active-button"}
-            >
-                Search
-            </button>
+                >
+                    Search
+                </button>
+            </div>
         </form>
     )
 }

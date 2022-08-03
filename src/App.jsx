@@ -1,4 +1,4 @@
-import { React, useContext, useRef, useState, useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
 import './App.css';
 import WeatherCard from './components/WeatherCard';
 import Footer from './components/Footer';
@@ -33,6 +33,8 @@ function App() {
             // }
         ]
     )
+
+    console.log(citiesLatLng )
     
     const [citiesOverviewData, setCitiesOverviewData] = useState(Array(citiesLatLng.length))
     const [cardsArrayIsVisible, setCardsArrayIsVisible] = useState(Array(citiesLatLng.length).fill(false))
@@ -113,8 +115,9 @@ function App() {
                         showCities={showCities}
                 />  
                 {isCitiesVisible && <CitiesOverview citiesOverviewData={citiesOverviewData}
-                                                    cityName={citiesNameArray} 
-                                    />
+                                                    cityName={citiesNameArray}
+                                                    setCitiesLatLng={setCitiesLatLng} 
+                                    />                    
                 }
             </div> 
         </div>

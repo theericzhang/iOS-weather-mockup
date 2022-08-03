@@ -634,8 +634,8 @@ hourly-wrapper:before {
     opacity: 0;
     width: calc(2 * 40px);
     height: calc(2 * 18px);
-    position: absolute;
-    right: calc(2 * 3.5px);
+    /* position: absolute;
+    right: calc(2 * 3.5px); */
     border: none;
     border-radius: calc(2 * 4.75px);
     color: #FFF;
@@ -657,6 +657,14 @@ hourly-wrapper:before {
 
 .cities-search-bar:focus ~ .search-button:hover {
     cursor: pointer;
+}
+
+.search-progress-wrapper {
+    display: flex;
+    position: absolute;
+    right: calc(2 * 3.5px);
+    align-items: center;
+    column-gap: calc(2 * 5px);
 }
 
 .weather-tiles-wrapper {
