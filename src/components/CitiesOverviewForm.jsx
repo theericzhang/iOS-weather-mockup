@@ -1,16 +1,17 @@
 import { React, useState, useContext } from "react"
 import CircularProgress from '@mui/material/CircularProgress'
+import { SetCitiesLatLongContext } from '../App'
 
 const {VITE_NAME_CITIES_NAME_KEY} = import.meta.env
 
 export default function CitiesOverviewForm({ focusHandler, 
                                              blurHandler,
-                                             isFocusedOnInput,
-                                             setCitiesLatLng }) 
+                                             isFocusedOnInput }) 
 {
     const [searchQuery, setSearchQuery] = useState('')
     const [searchQueryLatLong, setSearchQueryLatLong] = useState({})
     const [isActivelySearching, setIsActivelySearching] = useState(false)
+    const setCitiesLatLng = useContext(SetCitiesLatLongContext)
 
     // search by turning the ${searchQuery} 
     // into a pair of latitude/longitude coordinates. 
@@ -34,13 +35,10 @@ export default function CitiesOverviewForm({ focusHandler,
             // add these coordinates to the array of coordinates (app.jsx setCitiesLatLong)
             // can I pass setCitiesLatLong as a function via context?
 
-            setCitiesLatLng(prevCitiesLatLng => [...prevCitiesLatLng, 
-                                                {
-                                                    "lat": 40.7128,
-                                                    "long": -73.935242
-                                                }
-                                                ]
-            )
+            setCitiesLatLng(prevCitiesLatLng => [...prevCitiesLatLng, {
+                "lat": searchQueryLatLong?.latitude,
+                "long": searchQueryLatLong?.longitude
+            }])
         } else {
             setIsActivelySearching(false)
             alert("City could not be found, please try again")
