@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import { React, useContext, useRef, useState, useEffect, createContext } from 'react';
 import './App.css';
 import WeatherCard from './components/WeatherCard';
 import Footer from './components/Footer';
@@ -8,6 +8,8 @@ import nightBackground from './images/Night-Background.png'
 import { IsDayContext } from './components/WeatherCard';
 // import PhoneFrame from './images/iPhoneFrame.svg'
 const {VITE_NAME_CITIES_NAME_KEY} = import.meta.env
+
+export const SetCitiesLatLongContext = createContext()
 
 function App() {
     const [isDay, setIsDay] = useState(true);
@@ -34,7 +36,7 @@ function App() {
         ]
     )
 
-    console.log(citiesLatLng )
+    console.log(citiesLatLng?.[1])
     
     const [citiesOverviewData, setCitiesOverviewData] = useState(Array(citiesLatLng.length))
     const [cardsArrayIsVisible, setCardsArrayIsVisible] = useState(Array(citiesLatLng.length).fill(false))
@@ -114,10 +116,11 @@ function App() {
                         cardsArrayIsVisible={cardsArrayIsVisible}
                         showCities={showCities}
                 />  
-                {isCitiesVisible && <CitiesOverview citiesOverviewData={citiesOverviewData}
-                                                    cityName={citiesNameArray}
-                                                    setCitiesLatLng={setCitiesLatLng} 
-                                    />                    
+                {isCitiesVisible && <SetCitiesLatLongContext.Provider value={setCitiesLatLng}>
+                                        <CitiesOverview citiesOverviewData={citiesOverviewData}
+                                                        cityName={citiesNameArray} 
+                                        />
+                                    </SetCitiesLatLongContext.Provider>
                 }
             </div> 
         </div>
