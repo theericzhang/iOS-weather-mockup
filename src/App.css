@@ -672,6 +672,14 @@ hourly-wrapper:before {
     flex-direction: column;
     row-gap: calc(2 * 7.5px);
     margin-top: calc(2 * 12.5px);
+    overflow-y: scroll;
+    width: 100%;
+    align-items: center;
+    padding-bottom: 25px;
+}
+
+.weather-tiles-wrapper::-webkit-scrollbar {
+    display: none;
 }
 
 .c-o-t-wrapper {

@@ -139,7 +139,7 @@ export default function WeatherCard( { url,
     useEffect(() => {
         setCitiesOverviewData(prevCitiesOverviewData => {
             const tempArray = []
-            // set upperboundary to citiesLatLngLength, because prevCitiesOverviewData.length does not contain the
+            // set forloop upperboundary to citiesLatLngLength, because prevCitiesOverviewData.length does not contain the
             // updated length of the array that holds the cities' latlng objects.
             // citiesLatLngLength (citiesLatLng.length) is state that is dynamically updated based on 
             // the user completing the form in CitiesOverviewForm.jsx
