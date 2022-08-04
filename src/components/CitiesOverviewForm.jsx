@@ -29,18 +29,23 @@ export default function CitiesOverviewForm({ focusHandler,
                        "longitude": data?.data[0]?.longitude
                 }
             )
-            setIsActivelySearching(false)
-            console.log(searchQueryLatLong)
             // add these coordinates to the array of coordinates (app.jsx setCitiesLatLong)
             // can I pass setCitiesLatLong as a function via context?
 
             setCitiesLatLng(prevCitiesLatLng => [...prevCitiesLatLng, 
-                                                {
-                                                    "lat": data?.data[0]?.latitude,
-                                                    "long": data?.data[0]?.longitude
-                                                }
-                                                ]
+                {
+                    "lat": data?.data[0]?.latitude,
+                    "long": data?.data[0]?.longitude
+                }
+                ]
             )
+
+            setIsActivelySearching(false)
+
+            // revert focus back to main view. bring back opacity to other objects, disable "search" button
+            blurHandler()
+            console.log(searchQueryLatLong)
+            
         } else {
             setIsActivelySearching(false)
             alert("City could not be found, please try again")
