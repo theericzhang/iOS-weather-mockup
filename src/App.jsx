@@ -69,21 +69,43 @@ function App() {
     const [citiesNameArray, setCitiesNameArray] = useState(Array(citiesLatLng.length))
 
     async function getCitiesName(index, url) {
-        const res = await fetch(url)
-        const data = await res.json()
-        console.log(data)
-        setCitiesNameArray(prevCitiesNameArray => {
-            const tempArray = []
-            for (let i = 0; i < citiesLatLng.length; i++) {
-                if (i === index) {
-                    tempArray.push(data?.data[0]?.locality)
-                } else {
-                    tempArray.push(prevCitiesNameArray[i])
+        
+        // we need to guard the api fetches, because every time we add a city, the entire list becomes
+        // re-rendered. Sometimes when the items are re=rendered, the http requests cannot be caught up with
+        // effectively causing a city to be reverted to be undefined
+
+        // for example.... 
+        // citiesNameArray returns ['San Francisco', 'Los Angeles']
+        // we add a new city, New York
+        // we expect ['SF', 'LA', 'NY']
+        // but because of http requests being done again for the first two indicies due to a rerender,
+        // we may not receive 'SF' or 'LA' again.
+        // a realistic output would look like [undefined, 'Los Angeles', 'New York']
+
+        // so we check if each index is undefined. if it is, then we fetch from the api
+        // and store that name into the array. 
+
+        // if the index is not undefined, then we don't fetch from the api at all.
+        // this way, we save api calls ($$$) and prevent good data from being written over
+        // into potentially bad data.
+        
+        if (citiesNameArray[index] === undefined) {
+            const res = await fetch(url)
+            const data = await res.json()
+            console.log(data)
+            setCitiesNameArray(prevCitiesNameArray => {
+                const tempArray = []
+                for (let i = 0; i < citiesLatLng.length; i++) {
+                    if (i === index) {
+                        tempArray.push(data?.data[0]?.locality)
+                    } else {
+                        tempArray.push(prevCitiesNameArray[i])
+                    }
                 }
-            }
-            return tempArray
-            
-        })
+                return tempArray
+                
+            })
+        } 
     }
 
     useEffect(() => {    
