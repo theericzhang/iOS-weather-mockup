@@ -74,7 +74,7 @@ function App() {
         console.log(data)
         setCitiesNameArray(prevCitiesNameArray => {
             const tempArray = []
-            for (let i = 0; i < prevCitiesNameArray.length; i++) {
+            for (let i = 0; i < citiesLatLng.length; i++) {
                 if (i === index) {
                     tempArray.push(data?.data[0]?.locality)
                 } else {
@@ -90,7 +90,7 @@ function App() {
         for (let i = 0; i < citiesNameDataUrl.length; i++) {
             getCitiesName(i, citiesNameDataUrl[i])
         }
-    }, [])
+    }, [citiesNameDataUrl.length])
 
     console.log(citiesNameDataUrl)
 
