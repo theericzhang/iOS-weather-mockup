@@ -19,7 +19,7 @@ export default function CitiesOverviewForm({ focusHandler,
     // before the user commits to adding it to the citiesLatLong array, which handles
     // the rendering of complete array of citiesList (WeatherCard components)
 
-    async function grabCoordinates(searchQuery) {
+    async function grabCoordinates(searchQuery, e) {
         const res = await fetch(`http://api.positionstack.com/v1/forward?access_key=${VITE_NAME_CITIES_NAME_KEY}&query=${searchQuery}&limit=1`)
         const data = await res.json()
         if (data.data[0]?.latitude && data.data[0]?.longitude) {
@@ -45,6 +45,10 @@ export default function CitiesOverviewForm({ focusHandler,
             // revert focus back to main view. bring back opacity to other objects, disable "search" button
             // blurHandler toggles the boolean used to determine opacity states from CitiesOverview.jsx
             blurHandler()
+
+            // clear the search bar query
+            setSearchQuery('')
+
             console.log(searchQueryLatLong)
             
         } else {
@@ -56,7 +60,7 @@ export default function CitiesOverviewForm({ focusHandler,
     function handleSearchQuerySubmit(e) {
         e?.preventDefault()
         console.log(`You typed ${searchQuery}`)
-        grabCoordinates(searchQuery)
+        grabCoordinates(searchQuery, e)
         setIsActivelySearching(true)
     }
 
