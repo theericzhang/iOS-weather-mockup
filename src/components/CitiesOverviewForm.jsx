@@ -43,6 +43,7 @@ export default function CitiesOverviewForm({ focusHandler,
             setIsActivelySearching(false)
 
             // revert focus back to main view. bring back opacity to other objects, disable "search" button
+            // blurHandler toggles the boolean used to determine opacity states from CitiesOverview.jsx
             blurHandler()
             console.log(searchQueryLatLong)
             
