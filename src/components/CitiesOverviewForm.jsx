@@ -39,8 +39,14 @@ export default function CitiesOverviewForm({ focusHandler,
             }
 
             setCitiesLatLng(prevCitiesLatLng => {
-                console.log(prevCitiesLatLng, newCityLatLngObject)
-                // if (prevCitiesLatLng.includes(newCityLatLngObject))
+                
+                // We need to check if a city has already been entered before
+                // By looking at the prevCitiesLatLng array of objects, we can compare the incoming 
+                // lat/long object and see if it matches with one from the existing array (prevCitiesLatLng)
+                // using Array.some(), we can see compare each item in the array to our newCityLatLngObject.lat && long
+                // if both match, then we know we have an existing city in the preVitiesLatLng, so we can reject 
+                // the incoming query and return the prevCitiesLatLng array.
+                
                 if (prevCitiesLatLng.some(cityObject => cityObject.lat === newCityLatLngObject.lat && cityObject.long === newCityLatLngObject.long)) {
                     console.log("detected duplicate cities")
                     alert("You've already added this city")
