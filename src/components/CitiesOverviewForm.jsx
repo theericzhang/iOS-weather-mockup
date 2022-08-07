@@ -32,12 +32,35 @@ export default function CitiesOverviewForm({ focusHandler,
             // add these coordinates to the array of coordinates (app.jsx setCitiesLatLong)
             // can I pass setCitiesLatLong as a function via context?
 
-            setCitiesLatLng(prevCitiesLatLng => [...prevCitiesLatLng, 
-                {
-                    "lat": data?.data[0]?.latitude,
-                    "long": data?.data[0]?.longitude
+            const newCityLatLngObject = 
+            {
+                "lat": data?.data[0]?.latitude,
+                "long": data?.data[0]?.longitude  
+            }
+
+            setCitiesLatLng(prevCitiesLatLng => {
+                console.log(prevCitiesLatLng, newCityLatLngObject)
+                // if (prevCitiesLatLng.includes(newCityLatLngObject))
+                if (prevCitiesLatLng.some(cityObject => cityObject.lat === newCityLatLngObject.lat && cityObject.long === newCityLatLngObject.long)) {
+                    console.log("detected duplicate cities")
+                    alert("You've already added this city")
+                    return prevCitiesLatLng
+                } else {
+                    console.log("did not detect duplicate cities")
+                    return  [...prevCitiesLatLng, 
+                                {
+                                    "lat": data?.data[0]?.latitude,
+                                    "long": data?.data[0]?.longitude
+                                }
+                            ]
                 }
-                ]
+            }
+                // [...prevCitiesLatLng, 
+                //     {
+                //         "lat": data?.data[0]?.latitude,
+                //         "long": data?.data[0]?.longitude
+                //     }
+                // ]
             )
 
             setIsActivelySearching(false)
