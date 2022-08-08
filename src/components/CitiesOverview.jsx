@@ -6,7 +6,8 @@ import CitiesOverviewForm from "./CitiesOverviewForm"
 
 export default function CitiesOverview({ citiesOverviewData, 
                                          cityName, 
-                                         setCitiesLatLng }) 
+                                         setCitiesLatLng,
+                                         setIsCitiesVisible }) 
 {
     const animation = useSpring({ 
         to: { opacity: 1 }, 
@@ -23,6 +24,7 @@ export default function CitiesOverview({ citiesOverviewData,
                                    todayTempHigh={tile.todayTempHigh}
                                    todayTempLow={tile.todayTempLow}
                                    cityName={cityName[index]}
+                                   setIsCitiesVisible={setIsCitiesVisible}
                                    key={nanoid()}
                 />
     })

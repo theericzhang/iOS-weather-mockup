@@ -135,7 +135,7 @@ function App() {
     function receiveCardIsVisible(cardIsVisible, index) {
         setCardsArrayIsVisible(prevCardsArrayIsVisible => {
             const tempCardsArrayIsVisible = []
-            for (let i = 0; i < prevCardsArrayIsVisible.length; i++) {
+            for (let i = 0; i < citiesLatLng.length; i++) {
                 if (i === index) {
                     tempCardsArrayIsVisible.push(cardIsVisible)
                 } else {
@@ -167,6 +167,7 @@ function App() {
                 {isCitiesVisible && <CitiesOverview citiesOverviewData={citiesOverviewData}
                                                     cityName={citiesNameArray}
                                                     setCitiesLatLng={setCitiesLatLng} 
+                                                    setIsCitiesVisible={setIsCitiesVisible}
                                     />
                 }
             </div> 

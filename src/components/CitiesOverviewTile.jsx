@@ -1,8 +1,22 @@
 import React from "react";
 
-export default function CitiesOverviewTile( { comment, currenttemp, todayTempHigh, todayTempLow, cityName } ) {
+export default function CitiesOverviewTile( { comment, 
+                                              currenttemp, 
+                                              todayTempHigh, 
+                                              todayTempLow, 
+                                              cityName, 
+                                              setIsCitiesVisible } ) 
+{
+    
+    function clickedOnCityHandler() {
+        // set citiesOverview to false
+        setIsCitiesVisible(false)
+    }
+    
     return (
-        <div className="c-o-t-wrapper">
+        // when clicking a c-o-t-wrapper, the citiesOverview component should fadeaway, revealing the city's weathercard that was clicked.
+
+        <div className="c-o-t-wrapper" onClick={clickedOnCityHandler}>
             <div className="c-o-t-left">
                 <div className="c-o-t-left-top">
                     <h4 className="city-name">{cityName}</h4>
