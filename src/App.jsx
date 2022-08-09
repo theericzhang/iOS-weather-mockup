@@ -11,7 +11,8 @@ const {VITE_NAME_CITIES_NAME_KEY} = import.meta.env
 
 
 function App() {
-    const [isDay, setIsDay] = useState(true);
+    const [isDay, setIsDay] = useState(true)
+    // bool to show citiesOverview
     const [isCitiesVisible, setIsCitiesVisible] = useState(false)
 
     const [citiesLatLng, setCitiesLatLng] = useState(
@@ -164,12 +165,13 @@ function App() {
                         cardsArrayIsVisible={cardsArrayIsVisible}
                         showCities={showCities}
                 />  
-                {isCitiesVisible && <CitiesOverview citiesOverviewData={citiesOverviewData}
+                <CitiesOverview citiesOverviewData={citiesOverviewData}
                                                     cityName={citiesNameArray}
-                                                    setCitiesLatLng={setCitiesLatLng} 
+                                                    setCitiesLatLng={setCitiesLatLng}
+                                                    isCitiesVisible={isCitiesVisible} 
                                                     setIsCitiesVisible={setIsCitiesVisible}
-                                    />
-                }
+                />
+                
             </div> 
         </div>
     )

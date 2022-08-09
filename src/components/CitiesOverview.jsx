@@ -1,21 +1,24 @@
 import { React, useState } from "react"
 import CitiesOverviewTile from "./CitiesOverviewTile"
 import { nanoid } from "nanoid"
-import { useSpring, animated, easings } from "react-spring"
+import { useSpring, animated, easings, useTransition, config } from "react-spring"
 import CitiesOverviewForm from "./CitiesOverviewForm"
 
 export default function CitiesOverview({ citiesOverviewData, 
                                          cityName, 
                                          setCitiesLatLng,
+                                         isCitiesVisible,
                                          setIsCitiesVisible }) 
 {
-    const animation = useSpring({ 
-        to: { opacity: 1 }, 
+
+    const citiesOverviewTransition = useTransition(isCitiesVisible, {
         from: { opacity: 0 },
-        config: { 
-            easing: easings.easeInOutCirc,
-            duration: 20
-        }
+        enter: { opacity: 1 },
+        leave: { opacity: 0 },
+        delay: 20,
+        expires: true,
+        config: config.stiff,
+        reverse: isCitiesVisible,
     })
 
     const citiesOverviewTiles = citiesOverviewData.map((tile, index) => {
@@ -43,16 +46,21 @@ export default function CitiesOverview({ citiesOverviewData,
 
 
     return (
-        <animated.div className="cities-wrapper" style={animation}>
-            <CitiesOverviewForm focusHandler={focusHandler}
-                                blurHandler={blurHandler}
-                                isFocusedOnInput={isFocusedOnInput}
-                                setCitiesLatLng={setCitiesLatLng} 
-            />
-            <h2 className="weather-header" id={isFocusedOnInput ? "opacity-dark" : "opacity-light"}>Weather</h2>
-            <div className="weather-tiles-wrapper" id={isFocusedOnInput ? "opacity-dark" : "opacity-light"}>
-                {citiesOverviewTiles}
-            </div>
-        </animated.div>
+        citiesOverviewTransition((styles, item) => (
+            item ? <animated.div className="cities-wrapper" style={styles}>
+                        <CitiesOverviewForm focusHandler={focusHandler}
+                                            blurHandler={blurHandler}
+                                            isFocusedOnInput={isFocusedOnInput}
+                                            setCitiesLatLng={setCitiesLatLng} 
+                        />
+                        <h2 className="weather-header" id={isFocusedOnInput ? "opacity-dark" : "opacity-light"}>Weather</h2>
+                        <div className="weather-tiles-wrapper" id={isFocusedOnInput ? "opacity-dark" : "opacity-light"}>
+                            {citiesOverviewTiles}
+                        </div>
+                    </animated.div>
+                 : <animated.div style={styles}></animated.div>
+        )) 
+        
+        
     )
 }
