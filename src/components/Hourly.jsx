@@ -31,7 +31,7 @@ export default function Hourly ({ currentComment,
             return <HourlyTile hour={"Now"} 
                     temperature={hour.temperature}
                     wmocode={hour.weathercode}
-                    key={nanoid()}
+                    key={index}
                     // we want to appropriately display the weather logo depending if that hour 
                     // falls between nighttime and daytime. nighttime logos have a moon, daytime
                     // logos have a sun. Not all logos have a moon or sun indication, so we need
@@ -48,7 +48,7 @@ export default function Hourly ({ currentComment,
             return <HourlyTile hour={hour.hour} 
                     temperature={hour.temperature}
                     wmocode={hour.weathercode} 
-                    key={nanoid()}
+                    key={index}
                     // we want to appropriately display the weather logo depending if that hour 
                     // falls between nighttime and daytime. nighttime logos have a moon, daytime
                     // logos have a sun. Not all logos have a moon or sun indication, so we need

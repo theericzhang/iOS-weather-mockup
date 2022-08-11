@@ -14,7 +14,7 @@ export default function HourlyTile ({ hour, temperature, wmoCodeImageLink}) {
         <div className="tile" style={(temperature === "Sunset" || temperature === "Sunrise") ? sunrisesetStyles : null}>
             <h5 className="hour">{hour}</h5>
             <div className="tileForecastLogo-container">
-                <img src={require(`../images/${wmoCodeImageLink}.png`)} alt="" className="tileForecastLogo" />
+                <img src={new URL(`../images/${wmoCodeImageLink}.png`, import.meta.url)} alt="" className="tileForecastLogo" />
             </div>
             <h4 className="tileTemperature">{temperatureField}</h4>
         </div>

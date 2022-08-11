@@ -9,7 +9,13 @@ export const IsDayContext = createContext()
 export const WeatherDataContext = createContext()
 export const TodaysSunriseHourContext = createContext()
 
-export default function WeatherCard( { url, receiveIsDay, receiveCardIsVisible, index } ) {
+export default function WeatherCard( { url, 
+                                       receiveIsDay, 
+                                       receiveCardIsVisible, 
+                                       index, 
+                                       setCitiesOverviewData, 
+                                       cityName,
+                                       citiesLatLngLength } ) {
     const [weatherData, setWeatherData] = useState({})
     const [isDay, setIsDay] = useState(true)
     // const cardRef = useRef()
@@ -19,7 +25,6 @@ export default function WeatherCard( { url, receiveIsDay, receiveCardIsVisible, 
 
     useEffect(() => {
         receiveCardIsVisible(cardIsVisible, index)
-        console.log("card " + index + " was set to" + cardIsVisible)
     }, [cardIsVisible])
 
     // console.log("weather card", cardIsVisible)
@@ -130,13 +135,43 @@ export default function WeatherCard( { url, receiveIsDay, receiveCardIsVisible, 
     },[todaysSunriseHour, isDay])
     // let isDay = (timeNowInMinutes >= Number(todaysSunriseHour) * 60 + Number(todaysSunriseMinutes)) && (timeNowInMinutes <= Number(todaysSunsetHour) * 60 + Number(todaysSunsetMinutes))
 
+    // citiesOverviewData set here after fetching weather information from weatherData
+    useEffect(() => {
+        setCitiesOverviewData(prevCitiesOverviewData => {
+            const tempArray = []
+            // set forloop upperboundary to citiesLatLngLength, because prevCitiesOverviewData.length does not contain the
+            // updated length of the array that holds the cities' latlng objects.
+            // citiesLatLngLength (citiesLatLng.length) is state that is dynamically updated based on 
+            // the user completing the form in CitiesOverviewForm.jsx
+            // Querying a city name in text returns the latlng coordinates as an object,
+            // adds it to the citiesLatLng array, which then will update the citiesLatLng.length property.
+            // after this, we want to update the citiesOverviewData to include preview information
+            // that helps hydrate the "overview" view.
+            for (let i = 0; i < citiesLatLngLength; i++) {
+                if (i === index) {
+                    tempArray.push(
+                        {
+                            "currenttemp": Math.round(weatherData?.current_weather?.temperature),
+                            "comment": wmoCodes[weatherData?.current_weather?.weathercode],
+                            "todayTempHigh": Math.round(weatherData?.daily?.temperature_2m_max[0]),
+                            "todayTempLow": Math.round(weatherData?.daily?.temperature_2m_min[0])
+                        }
+                    )
+                } else {
+                    tempArray.push(prevCitiesOverviewData[i])
+                }
+            }
+            return tempArray
+        })
+    },[weatherData, citiesLatLngLength])
+
     while (weatherData === undefined) {
         //loading placeholder
         return (
             <div className="App">
                 <div className="phone-wrapper">
                     <img src={require('../images/Sunny-Background.jpeg')} alt="" className="weather-background" />
-                    <Hero region={"San Francisco"}
+                    <Hero region={""}
                         currenttemp={"--"} 
                     />
                     <Footer />
@@ -207,7 +242,7 @@ export default function WeatherCard( { url, receiveIsDay, receiveCardIsVisible, 
     return (
         <div className="weather-card-wrapper" ref={cardRef}>
             {/* {todaysSunriseHour !== undefined && weatherData !== undefined && <img src={isDay ? require('../images/Sunny-Background.jpeg') : require('../images/Night-Background.png')} alt="" className="weather-background" />} */}
-            <Hero region={weatherData? "San Francisco" : null}
+            <Hero region={weatherData && cityName? cityName : null}
                 currenttemp={weatherData?.current_weather?.temperature}
                 comment={wmoCodes[weatherData?.current_weather?.weathercode]}  
                 todayTempMin={weatherData?.daily?.temperature_2m_min[0]}
