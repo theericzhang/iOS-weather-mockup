@@ -5,18 +5,21 @@ export default function CitiesOverviewTile( { comment,
                                               todayTempHigh, 
                                               todayTempLow, 
                                               cityName, 
-                                              setIsCitiesVisible } ) 
+                                              setIsCitiesVisible,
+                                              clickCitiesOverviewTile,
+                                              index } ) 
 {
     
-    function clickedOnCityHandler() {
+    function clickedOnCityHandler(index) {
         // set citiesOverview to false
+        clickCitiesOverviewTile(index)
         setIsCitiesVisible(false)
     }
     
     return (
         // when clicking a c-o-t-wrapper, the citiesOverview component should fadeaway, revealing the city's weathercard that was clicked.
 
-        <div className="c-o-t-wrapper" onClick={clickedOnCityHandler}>
+        <div className="c-o-t-wrapper" onClick={() => clickedOnCityHandler(index)}>
             <div className="c-o-t-left">
                 <div className="c-o-t-left-top">
                     <h4 className="city-name">{cityName}</h4>

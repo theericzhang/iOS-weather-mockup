@@ -8,7 +8,8 @@ export default function CitiesOverview({ citiesOverviewData,
                                          cityName, 
                                          setCitiesLatLng,
                                          isCitiesVisible,
-                                         setIsCitiesVisible }) 
+                                         setIsCitiesVisible,
+                                         clickCitiesOverviewTile }) 
 {
 
     const citiesOverviewTransition = useTransition(isCitiesVisible, {
@@ -28,6 +29,8 @@ export default function CitiesOverview({ citiesOverviewData,
                                    todayTempLow={tile.todayTempLow}
                                    cityName={cityName[index]}
                                    setIsCitiesVisible={setIsCitiesVisible}
+                                   clickCitiesOverviewTile={clickCitiesOverviewTile}
+                                   index={index}
                                    key={nanoid()}
                 />
     })

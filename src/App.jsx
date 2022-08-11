@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useRef } from 'react';
 import './App.css';
 import WeatherCard from './components/WeatherCard';
 import Footer from './components/Footer';
@@ -117,16 +117,30 @@ function App() {
 
     console.log(citiesNameDataUrl)
 
+    const weatherCardRef = useRef([])
+    weatherCardRef.current = []
+
+    function clickCitiesOverviewTile(index) {
+        console.log(`This is tile number ${index}`)
+        // scroll to object with ref[index]
+        console.log(weatherCardRef.current)
+        weatherCardRef.current[index].scrollIntoView()
+    }
+
     const citiesList = citiesLatLng.map((city, index) => {
-        return <WeatherCard url={`https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.long}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FLos_Angeles`}
-                     receiveIsDay={receiveIsDay}
-                     receiveCardIsVisible={receiveCardIsVisible}
-                     index={index}
-                     key={index}
-                     setCitiesOverviewData={setCitiesOverviewData}
-                     cityName={citiesNameArray[index]}
-                     citiesLatLngLength={citiesLatLng.length}
-        />
+        return (
+            <div ref={(el) => weatherCardRef.current.splice(index, 1, el)} key={index}>
+                <WeatherCard url={`https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.long}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FLos_Angeles`}
+                        receiveIsDay={receiveIsDay}
+                        receiveCardIsVisible={receiveCardIsVisible}
+                        index={index}
+                        key={index}
+                        setCitiesOverviewData={setCitiesOverviewData}
+                        cityName={citiesNameArray[index]}
+                        citiesLatLngLength={citiesLatLng.length}
+                />
+            </div>
+        )
     })
 
     function receiveIsDay(incomingIsDay) {
@@ -153,7 +167,6 @@ function App() {
 
     console.log(citiesNameArray)
 
-
     return (
         <div className="App">
             <div className="phone-wrapper">
@@ -170,6 +183,7 @@ function App() {
                                                     setCitiesLatLng={setCitiesLatLng}
                                                     isCitiesVisible={isCitiesVisible} 
                                                     setIsCitiesVisible={setIsCitiesVisible}
+                                                    clickCitiesOverviewTile={clickCitiesOverviewTile}
                 />
                 
             </div> 
